@@ -76,8 +76,8 @@
       "location": "Belo Horizonte, Brazil",
       "roles": [
         { "id": "enotas-tech-lead", "title": "Tech Lead Data Analysis", "start": "2021-10", "end": "2022-11", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] },
-        { "id": "enotas-analyst", "title": "Data Analyst", "start": "2021-07", "end": "2021-09", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] },
-        { "id": "enotas-junior-analyst", "title": "Junior Data Analyst", "start": "2021-03", "end": "2021-06", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
+        { "id": "enotas-analyst", "title": "Data Analyst", "start": "2021-07", "end": "2021-09", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Figma", "Data Modeling", "ETL", "Dashboards"] },
+        { "id": "enotas-junior-analyst", "title": "Junior Data Analyst", "start": "2021-03", "end": "2021-06", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
