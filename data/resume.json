@@ -46,7 +46,7 @@
     "title": "Analytics Engineer",
     "credentials": "Microsoft Certified Trainer",
     "location": "Portugal",
-    "summary": { "en": "Analytics Engineer and Microsoft Certified Trainer focused on the Microsoft Fabric and Power BI ecosystem, with 5+ years in data and a background in industrial engineering. I build end-to-end solutions, from PySpark and SQL pipelines to Direct Lake semantic models, have worked as a Tech Lead and have delivered Microsoft Fabric and Power BI trainings. I'm also an active part of the data community, and I haven't missed a European Microsoft Fabric Community Conference since the first one in 2024.", "pt": "Analytics Engineer e Microsoft Certified Trainer com foco no ecossistema Microsoft Fabric e Power BI, com mais de 5 anos em dados e formação em Engenharia de Produção. Desenvolvo soluções de ponta a ponta, de pipelines em PySpark e SQL a modelos semânticos em Direct Lake, já atuei como Tech Lead e ministrei treinamentos de Microsoft Fabric e Power BI. Também faço parte ativa da comunidade de dados e não perdi nenhuma European Microsoft Fabric Community Conference desde a primeira, em 2024." },
+    "summary": { "en": "Analytics Engineer and Microsoft Certified Trainer focused on the Microsoft Fabric and Power BI ecosystem, with 5+ years in data and a background in industrial engineering. I build end-to-end solutions, from PySpark and SQL pipelines to Direct Lake semantic models, have worked as a Tech Lead and have delivered Microsoft Fabric and Power BI trainings. I'm also an active part of the data community, and I haven't missed a European Microsoft Fabric Community Conference since the first one in 2024.", "pt": "Analytics Engineer e Microsoft Certified Trainer com foco no ecossistema Microsoft Fabric e Power BI, com mais de 5 anos em dados e formação em Engenharia de Produção. Desenvolvo soluções de ponta a ponta, de pipelines em PySpark e SQL a modelos semânticos em Direct Lake, já atuei como Tech Lead e ministrei treinamentos de Microsoft Fabric e Power BI. Também faço parte ativa da comunidade de dados e não perdi nenhuma Conferência Europeia da Comunidade de Microsoft Fabric desde a primeira, em 2024." },
     "links": [
       { "label": "LinkedIn", "icon": "linkedin", "display": "linkedin.com/in/diego-scalioni", "url": "https://www.linkedin.com/in/diego-scalioni/" },
       { "label": "GitHub", "icon": "github", "display": "github.com/diego-dsanalytics", "url": "https://github.com/diego-dsanalytics" },
@@ -149,7 +149,7 @@
 
   "work": [
     {
-      "title": "European Microsoft Fabric Community Conference",
+      "title": { "en": "European Microsoft Fabric Community Conference", "pt": "Conferência Europeia da Comunidade de Microsoft Fabric" },
       "kind": { "en": "Community", "pt": "Comunidade" },
       "period": "2024 – 2026",
       "summary": { "en": "I've been part of every edition so far: Stockholm (2024), Vienna (2025) and Barcelona (2026). For me it's the yearly chance to meet the people behind the Fabric community, learn from them and share what I bring back.", "pt": "Participei de todas as edições até agora: Estocolmo (2024), Viena (2025) e Barcelona (2026). Para mim, é a chance anual de encontrar quem faz a comunidade de Fabric, aprender com essas pessoas e compartilhar o que trago de volta." },
