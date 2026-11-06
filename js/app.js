@@ -20,17 +20,65 @@
 
   // Browser storage can be missing or throw (private mode, blocked site data).
   const store = {
+    get(key) {
+      try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+    },
     set(key, value) {
       try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
     }
   };
 
+  const LOCALES = { en: "en", pt: "pt-BR" };
+
   const state = {
-    data: null,
+    raw: null,            // resume.json as loaded, with both languages
+    data: null,           // the same data resolved to the current language
+    lang: "en",
     roles: [],            // flat list; each role also carries its company
     skill: "",            // active skill filter; empty shows everything
     now: new Date()
   };
+
+  /* ---------- Language ---------- */
+  const isTranslation = v => v && typeof v === "object" && !Array.isArray(v) && "en" in v;
+
+  // Replaces every { "en": ..., "pt": ... } in the data with the text for one language.
+  // A plain value is the same in both languages, and a missing "pt" falls back to "en".
+  function localize(value, lang) {
+    if (isTranslation(value)) return value[lang] ?? value.en;
+    if (Array.isArray(value)) return value.map(v => localize(v, lang));
+    if (value && typeof value === "object") {
+      return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, localize(v, lang)]));
+    }
+    return value;
+  }
+
+  const t = (key, vars = {}) => Object.entries(vars).reduce(
+    (text, [k, v]) => text.replace(`{${k}}`, v), state.data.ui[key] ?? key);
+
+  function initialLanguage() {
+    const saved = store.get("resume-lang");
+    if (saved && LOCALES[saved]) return saved;
+    return (navigator.language || "").toLowerCase().startsWith("pt") ? "pt" : "en";
+  }
+
+  function renderStaticText() {
+    document.documentElement.lang = LOCALES[state.lang];
+    $$("[data-i18n]").forEach(n => { n.textContent = t(n.dataset.i18n); });
+    $$("[data-i18n-label]").forEach(n => {
+      const text = t(n.dataset.i18nLabel);
+      n.setAttribute("aria-label", text);
+      if (n.hasAttribute("title")) n.title = text;
+    });
+    $$("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === state.lang)));
+  }
+
+  function setLanguage(lang) {
+    if (lang === state.lang) return;
+    state.lang = lang;
+    store.set("resume-lang", lang);
+    render();
+  }
 
   /* ---------- Dates ---------- */
   const monthIndex = iso => {
@@ -42,15 +90,15 @@
   // Both ends are inclusive: Jan to Mar is three months.
   const roleMonths = role => endIndex(role) - monthIndex(role.start) + 1;
 
-  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const fmtMonth = iso => {
     const [y, m] = iso.split("-").map(Number);
-    return `${MONTHS[m - 1]} ${y}`;
+    return `${state.data.ui.months[m - 1]} ${y}`;
   };
-  const fmtRange = role => `${fmtMonth(role.start)} – ${role.end ? fmtMonth(role.end) : "Present"}`;
+  const fmtRange = role => `${fmtMonth(role.start)} – ${role.end ? fmtMonth(role.end) : t("present")}`;
+  const plural = (n, key) => `${n} ${state.data.ui[key][n === 1 ? 0 : 1]}`;
   const fmtDuration = months => {
     const y = Math.floor(months / 12), m = months % 12;
-    return [y && `${y} yr${y > 1 ? "s" : ""}`, m && `${m} mo${m > 1 ? "s" : ""}`].filter(Boolean).join(" ") || "1 mo";
+    return [y && plural(y, "year"), m && plural(m, "month")].filter(Boolean).join(" ");
   };
   // Months covered by any of the roles, so overlapping roles are never counted twice.
   const coveredMonths = roles => {
@@ -70,6 +118,9 @@
       store.set("resume-theme", next);
     });
     $("#print-btn").addEventListener("click", () => window.print());
+    $$("[data-lang]").forEach(b => b.addEventListener("click", () => setLanguage(b.dataset.lang)));
+    const select = $("#skill-filter");
+    select.addEventListener("change", () => setSkill(select.value));
   }
 
   /* ---------- Hero ---------- */
@@ -113,10 +164,16 @@
 
   function renderYears() {
     const years = Math.floor(coveredMonths(state.roles) / 12);
-    $("#career-years").replaceChildren(el("strong", {}, `${years}+`), " years of experience");
+    $("#career-years").replaceChildren(el("strong", {}, `${years}+`), ` ${t("yearsOf")}`);
   }
 
   /* ---------- Skill filter ---------- */
+  // Skills are matched by "name" in every language; "label" is only what gets displayed.
+  const skillLabel = name => {
+    const skill = state.data.skills.find(s => s.name === name);
+    return (skill && skill.label) || name;
+  };
+
   const usage = name => ({
     roles: state.roles.filter(r => r.skills.includes(name)).length,
     certs: state.data.certifications.filter(c => c.skills.includes(name)).length,
@@ -128,12 +185,12 @@
     const skills = state.data.skills
       .map(s => s.name)
       .filter(name => { const u = usage(name); return u.roles + u.certs + u.work > 0; })
-      .sort((a, b) => a.localeCompare(b));
+      .sort((a, b) => skillLabel(a).localeCompare(skillLabel(b), LOCALES[state.lang]));
     const select = $("#skill-filter");
     select.replaceChildren(
-      el("option", { value: "" }, "All skills"),
-      ...skills.map(name => el("option", { value: name }, name)));
-    select.addEventListener("change", () => setSkill(select.value));
+      el("option", { value: "" }, t("allSkills")),
+      ...skills.map(name => el("option", { value: name }, skillLabel(name))));
+    select.value = state.skill;
   }
 
   function setSkill(name) {
@@ -160,11 +217,9 @@
 
     const matchedCerts = state.data.certifications.filter(c => matches(c.skills)).length;
     $("#filter-status").textContent = skill
-      ? `${plural(matchedRoles, "role")} and ${plural(matchedCerts, "certification")}`
+      ? `${plural(matchedRoles, "role")} ${t("and")} ${plural(matchedCerts, "certification")}`
       : "";
   }
-
-  const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
   /* ---------- Timeline ---------- */
   function renderTimeline() {
@@ -193,7 +248,7 @@
               class: `bar bar--${role.phase}${role.end ? "" : " bar--current"}`,
               "data-role": role.id,
               style: `--left:${pct(monthIndex(role.start))};--width:${(roleMonths(flat) / span) * 100}%`,
-              "aria-label": `${role.title} at ${company.company}, ${fmtRange(role)}. Open details.`,
+              "aria-label": t("barLabel", { title: role.title, company: company.company, dates: fmtRange(role) }),
               onclick: () => { location.hash = `role-${role.id}`; },
               onmouseenter: () => showReadout(flat),
               onfocus: () => showReadout(flat)
@@ -213,7 +268,7 @@
   function showReadout(role) {
     $("#readout").textContent = role
       ? `${role.title} · ${role.company} · ${fmtRange(role)} · ${fmtDuration(roleMonths(role))}`
-      : "Hover or focus a bar to preview a role.";
+      : t("readoutHint");
   }
 
   /* ---------- Experience ---------- */
@@ -237,27 +292,31 @@
     ? el("ul", { class: "highlights" }, items.map(h => el("li", {}, h)))
     : null);
 
-  /* ---------- Selected work ---------- */
+  /* ---------- Featured work ---------- */
   function renderWork() {
     const items = state.data.work;
     $("#work").hidden = !items.length;
-    $("#work-list").replaceChildren(...items.map(w =>
-      el("article", { class: "work__item", "data-skills": JSON.stringify(w.skills) },
-        el("p", { class: "work__meta" }, `${w.kind} · ${fmtMonth(w.date)}`),
+    $("#work-list").replaceChildren(...items.map(w => {
+      // One "url", or a "links" list when an item has several.
+      const links = w.links || (w.url ? [{ url: w.url, label: w.linkLabel || t("readMore") }] : []);
+      return el("article", { class: "work__item", "data-skills": JSON.stringify(w.skills) },
+        el("p", { class: "work__meta" }, `${w.kind} · ${w.period || fmtMonth(w.date)}`),
         el("h3", {}, w.title),
         el("p", {}, w.summary),
         chipList(w.skills),
-        w.url && el("a", { class: "work__link", href: w.url, ...externalAttrs(w.url) }, w.linkLabel || "Read more"))));
+        links.length ? el("div", { class: "work__links" }, links.map(l =>
+          el("a", { href: l.url, ...externalAttrs(l.url) }, l.label))) : null);
+    }));
   }
 
   const chipList = skills => (skills && skills.length
-    ? el("ul", { class: "chips" }, skills.map(s => el("li", {}, s)))
+    ? el("ul", { class: "chips" }, skills.map(s => el("li", {}, skillLabel(s))))
     : null);
 
   /* ---------- Certifications ---------- */
   function certStatus(cert) {
     // Only a retirement gets a label. A lapsed certification just shows its validity dates.
-    return cert.retired ? el("span", { class: "tag" }, `Retired by ${cert.issuer}`) : null;
+    return cert.retired ? el("span", { class: "tag" }, t("retiredBy", { issuer: cert.issuer })) : null;
   }
 
   function badgeCard(cert) {
@@ -272,8 +331,9 @@
   const certDate = cert => {
     const issued = cert.issued ? fmtMonth(cert.issued) : "";
     if (!cert.expires) return issued;
-    if (isExpired(cert)) return issued ? `${issued} – ${fmtMonth(cert.expires)}` : `Until ${fmtMonth(cert.expires)}`;
-    return issued ? `${issued} · valid until ${fmtMonth(cert.expires)}` : `Valid until ${fmtMonth(cert.expires)}`;
+    const date = fmtMonth(cert.expires);
+    if (isExpired(cert)) return issued ? `${issued} – ${date}` : t("until", { date });
+    return issued ? `${issued} · ${t("validUntilInline", { date })}` : t("validUntil", { date });
   };
 
   function certRow(cert) {
@@ -316,11 +376,15 @@
         el("p", { class: "toolkit__group" }, g),
         el("ul", { class: "chips" }, skills.filter(s => s.group === g).map(s => {
           const u = usage(s.name);
-          return el("li", { title: `${plural(u.roles, "role")}, ${plural(u.certs, "certification")}, ${plural(u.work, "work item")}` }, s.name);
+          return el("li", { title: `${plural(u.roles, "role")}, ${plural(u.certs, "certification")}, ${plural(u.work, "workItem")}` }, s.label || s.name);
         })))));
 
     $("#language-list").replaceChildren(...languages.map(l =>
-      el("div", {}, el("dt", {}, l.name), l.level && el("dd", {}, l.level))));
+      el("div", {},
+        el("dt", {},
+          l.flag && el("img", { class: "flag", src: `assets/flags/${l.flag}.svg`, alt: "", width: "16", height: "16" }),
+          l.name),
+        l.level && el("dd", {}, l.level))));
   }
 
   /* ---------- Drawer ---------- */
@@ -337,13 +401,13 @@
       el("p", { class: "drawer__dates" }, `${fmtRange(role)} · ${fmtDuration(roleMonths(role))}`),
       role.summary && el("p", {}, role.summary),
       highlightList(role.highlights),
-      role.skills.length ? el("h3", {}, "Skills") : null,
+      role.skills.length ? el("h3", {}, t("skillsHeading")) : null,
       role.skills.length ? el("div", { class: "drawer__skills" }, role.skills.map(s =>
         el("button", {
           type: "button", class: "skill-btn",
           onclick: () => { setSkill(s); closeDrawer(); location.hash = "career"; }
-        }, s))) : null,
-      siblings.length ? el("h3", {}, `Also at ${role.company}`) : null,
+        }, skillLabel(s)))) : null,
+      siblings.length ? el("h3", {}, t("alsoAt", { company: role.company })) : null,
       siblings.length ? el("ul", { class: "drawer__siblings" }, siblings.map(r =>
         el("li", {}, el("a", { href: `#role-${r.id}` }, r.title), ` · ${fmtRange(r)}`))) : null
     ].filter(Boolean));
@@ -431,25 +495,13 @@
   }
 
   /* ---------- Boot ---------- */
-  async function init() {
-    initControls();
-    initDrawer();
-    try {
-      const res = await fetch("data/resume.json", { cache: "no-cache" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      state.data = await res.json();
-    } catch (err) {
-      console.error("[resume] Could not load data/resume.json", err);
-      $("#main").replaceChildren(el("p", { class: "wrap load-error" },
-        "The resume data could not be loaded. If you opened this file directly from disk, serve the folder instead (see the README)."));
-      return;
-    }
-
+  // Draws the whole page in the current language. It also runs on a language change.
+  function render() {
+    state.data = localize(state.raw, state.lang);
     state.roles = state.data.experience.flatMap(c => c.roles.map(r => ({
       ...r, company: c.company, location: c.location
     })));
-
-    validate();
+    renderStaticText();
     renderHero();
     renderYears();
     renderSkillFilter();
@@ -458,6 +510,26 @@
     renderWork();
     renderCertifications();
     renderBackground();
+    applyFilter();
+  }
+
+  async function init() {
+    initControls();
+    initDrawer();
+    try {
+      const res = await fetch("data/resume.json", { cache: "no-cache" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      state.raw = await res.json();
+    } catch (err) {
+      console.error("[resume] Could not load data/resume.json", err);
+      $("#main").replaceChildren(el("p", { class: "wrap load-error" },
+        "The resume data could not be loaded. If you opened this file directly from disk, serve the folder instead (see the README)."));
+      return;
+    }
+
+    state.lang = initialLanguage();
+    render();
+    validate();
     initReveal();
 
     window.addEventListener("hashchange", syncHash);

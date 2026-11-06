@@ -1,149 +1,203 @@
 {
+  "ui": {
+    "skip": { "en": "Skip to content", "pt": "Ir para o conteúdo" },
+    "navAbout": { "en": "About", "pt": "Sobre" },
+    "navCareer": { "en": "Career", "pt": "Carreira" },
+    "navExperience": { "en": "Experience", "pt": "Experiência" },
+    "navWork": { "en": "Work", "pt": "Trabalhos" },
+    "navCerts": { "en": "Certifications", "pt": "Certificações" },
+    "navToolkit": { "en": "Toolkit", "pt": "Competências" },
+    "languageSwitch": { "en": "Language", "pt": "Idioma" },
+    "print": { "en": "Print or save as PDF", "pt": "Imprimir ou salvar em PDF" },
+    "theme": { "en": "Toggle dark mode", "pt": "Alternar modo escuro" },
+    "close": { "en": "Close details", "pt": "Fechar detalhes" },
+    "education": { "en": "Education", "pt": "Formação" },
+    "languages": { "en": "Languages", "pt": "Idiomas" },
+    "careerTitle": { "en": "Career timeline", "pt": "Linha do tempo da carreira" },
+    "careerHelp": { "en": "Select a bar for the details. Filter by skill to see where each one shows up.", "pt": "Selecione uma barra para ver os detalhes. Filtre por competência para ver onde cada uma aparece." },
+    "skillFilter": { "en": "Skill", "pt": "Competência" },
+    "allSkills": { "en": "All skills", "pt": "Todas as competências" },
+    "yearsOf": { "en": "years of experience", "pt": "anos de experiência" },
+    "readoutHint": { "en": "Hover or focus a bar to preview a role.", "pt": "Passe o mouse ou o foco em uma barra para ver o cargo." },
+    "barLabel": { "en": "{title} at {company}, {dates}. Open details.", "pt": "{title} em {company}, {dates}. Abrir detalhes." },
+    "experienceTitle": { "en": "Experience", "pt": "Experiência" },
+    "workTitle": { "en": "Featured work", "pt": "Trabalhos em destaque" },
+    "certTitle": { "en": "Certifications", "pt": "Certificações" },
+    "toolkitTitle": { "en": "Toolkit", "pt": "Competências" },
+    "present": { "en": "Present", "pt": "Atual" },
+    "skillsHeading": { "en": "Skills", "pt": "Competências" },
+    "alsoAt": { "en": "Also at {company}", "pt": "Também em {company}" },
+    "retiredBy": { "en": "Retired by {issuer}", "pt": "Descontinuada pela {issuer}" },
+    "until": { "en": "Until {date}", "pt": "Até {date}" },
+    "validUntilInline": { "en": "valid until {date}", "pt": "válida até {date}" },
+    "validUntil": { "en": "Valid until {date}", "pt": "Válida até {date}" },
+    "readMore": { "en": "Read more", "pt": "Ler mais" },
+    "and": { "en": "and", "pt": "e" },
+    "months": { "en": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "pt": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"] },
+    "role": { "en": ["role", "roles"], "pt": ["cargo", "cargos"] },
+    "certification": { "en": ["certification", "certifications"], "pt": ["certificação", "certificações"] },
+    "workItem": { "en": ["work item", "work items"], "pt": ["trabalho", "trabalhos"] },
+    "year": { "en": ["yr", "yrs"], "pt": ["ano", "anos"] },
+    "month": { "en": ["mo", "mos"], "pt": ["mês", "meses"] }
+  },
+
   "profile": {
     "name": "Diego Scalioni",
     "title": "Analytics Engineer",
     "credentials": "Microsoft Certified Trainer",
     "location": "Portugal",
-    "summary": "Passionate about technology, statistics and storytelling with data. I work with Power BI and Microsoft Fabric every day, and I also dabble in Databricks, Python, APIs and automation. I'm an industrial engineer by training, with a postgraduate degree in Lean Manufacturing.",
+    "summary": { "en": "Analytics Engineer and Microsoft Certified Trainer focused on the Microsoft Fabric and Power BI ecosystem, with 5+ years in data and a background in industrial engineering. I build end-to-end solutions, from PySpark and SQL pipelines to Direct Lake semantic models, have worked as a Tech Lead and have delivered Microsoft Fabric and Power BI trainings. I'm also an active part of the data community, and I haven't missed a European Microsoft Fabric Community Conference since the first one in 2024.", "pt": "Analytics Engineer e Microsoft Certified Trainer com foco no ecossistema Microsoft Fabric e Power BI, com mais de 5 anos em dados e formação em Engenharia de Produção. Desenvolvo soluções de ponta a ponta, de pipelines em PySpark e SQL a modelos semânticos em Direct Lake, já atuei como Tech Lead e ministrei treinamentos de Microsoft Fabric e Power BI. Também faço parte ativa da comunidade de dados e não perdi nenhuma European Microsoft Fabric Community Conference desde a primeira, em 2024." },
     "links": [
       { "label": "LinkedIn", "icon": "linkedin", "display": "linkedin.com/in/diego-scalioni", "url": "https://www.linkedin.com/in/diego-scalioni/" },
       { "label": "GitHub", "icon": "github", "display": "github.com/diego-dsanalytics", "url": "https://github.com/diego-dsanalytics" },
       { "label": "Microsoft Learn", "icon": "microsoft", "display": "learn.microsoft.com/en-us/users/diegochagas-6867", "url": "https://learn.microsoft.com/en-us/users/diegochagas-6867/" },
-      { "label": "Email", "icon": "mail", "display": "diegoscalionitp@gmail.com", "url": "mailto:diegoscalionitp@gmail.com" }
+      { "label": { "en": "Email", "pt": "E-mail" }, "icon": "mail", "display": "diegoscalionitp@gmail.com", "url": "mailto:diegoscalionitp@gmail.com" }
     ]
   },
 
   "phases": [
-    { "id": "data", "name": "Data & analytics" },
-    { "id": "support", "name": "Customer support" },
-    { "id": "operations", "name": "Operations & quality" },
-    { "id": "teaching", "name": "Teaching" }
+    { "id": "data", "name": { "en": "Data & analytics", "pt": "Dados e analytics" } },
+    { "id": "support", "name": { "en": "Customer support", "pt": "Suporte ao cliente" } },
+    { "id": "operations", "name": { "en": "Operations & quality", "pt": "Operações e qualidade" } },
+    { "id": "teaching", "name": { "en": "Teaching", "pt": "Ensino" } }
   ],
 
   "skills": [
-    { "name": "Microsoft Power BI", "group": "Core" },
-    { "name": "Microsoft Fabric", "group": "Core" },
-    { "name": "DAX", "group": "Core" },
-    { "name": "Power Query", "group": "Core" },
-    { "name": "SQL", "group": "Core" },
-    { "name": "PySpark", "group": "Core" },
-    { "name": "Excel", "group": "Core" },
-    { "name": "Python", "group": "Also" },
-    { "name": "Databricks", "group": "Also" },
-    { "name": "KQL", "group": "Also" },
-    { "name": "Microsoft Azure", "group": "Also" },
-    { "name": "Figma", "group": "Also" },
-    { "name": "Minitab", "group": "Also" },
-    { "name": "Data Modeling", "group": "Practices" },
-    { "name": "ETL", "group": "Practices" },
-    { "name": "Dashboards", "group": "Practices" },
-    { "name": "Mentoring", "group": "Practices" }
+    { "name": "Microsoft Power BI", "group": { "en": "Core", "pt": "Principais" } },
+    { "name": "Microsoft Fabric", "group": { "en": "Core", "pt": "Principais" } },
+    { "name": "DAX", "group": { "en": "Core", "pt": "Principais" } },
+    { "name": "Power Query", "group": { "en": "Core", "pt": "Principais" } },
+    { "name": "SQL", "group": { "en": "Core", "pt": "Principais" } },
+    { "name": "PySpark", "group": { "en": "Core", "pt": "Principais" } },
+    { "name": "Excel", "group": { "en": "Core", "pt": "Principais" } },
+    { "name": "Python", "group": { "en": "Also", "pt": "Complementares" } },
+    { "name": "Databricks", "group": { "en": "Also", "pt": "Complementares" } },
+    { "name": "KQL", "group": { "en": "Also", "pt": "Complementares" } },
+    { "name": "Microsoft Azure", "group": { "en": "Also", "pt": "Complementares" } },
+    { "name": "Figma", "group": { "en": "Also", "pt": "Complementares" } },
+    { "name": "Minitab", "group": { "en": "Also", "pt": "Complementares" } },
+    { "name": "Data Modeling", "label": { "en": "Data Modeling", "pt": "Modelagem de Dados" }, "group": { "en": "Practices", "pt": "Práticas" } },
+    { "name": "ETL", "group": { "en": "Practices", "pt": "Práticas" } },
+    { "name": "Dashboards", "group": { "en": "Practices", "pt": "Práticas" } },
+    { "name": "Mentoring", "label": { "en": "Mentoring", "pt": "Mentoria" }, "group": { "en": "Practices", "pt": "Práticas" } }
   ],
 
   "experience": [
     {
       "company": "BI4ALL",
-      "location": "",
+      "location": { "en": "Lisbon, Portugal", "pt": "Lisboa, Portugal" },
       "roles": [
         { "id": "bi4all-senior-consultant", "title": "Senior Analytics Consultant", "start": "2026-04", "end": null, "phase": "data", "mode": "", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] },
-        { "id": "bi4all-consultant", "title": "Analytics Consultant", "start": "2025-10", "end": "2026-03", "phase": "data", "mode": "Hybrid", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] }
+        { "id": "bi4all-consultant", "title": "Analytics Consultant", "start": "2025-10", "end": "2026-03", "phase": "data", "mode": { "en": "Hybrid", "pt": "Híbrido" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] }
       ]
     },
     {
       "company": "Capgemini Engineering",
       "location": "Porto, Portugal",
       "roles": [
-        { "id": "capgemini-consultant-engineer", "title": "Consultant Engineer", "start": "2025-04", "end": "2025-09", "phase": "data", "mode": "Hybrid", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
+        { "id": "capgemini-consultant-engineer", "title": "Consultant Engineer", "start": "2025-04", "end": "2025-09", "phase": "data", "mode": { "en": "Hybrid", "pt": "Híbrido" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
       "company": "Quartile",
-      "location": "New York, United States",
+      "location": { "en": "New York, United States", "pt": "Nova York, Estados Unidos" },
       "roles": [
-        { "id": "quartile-analytics-engineer", "title": "Analytics Engineer", "start": "2024-09", "end": "2025-03", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
+        { "id": "quartile-analytics-engineer", "title": "Analytics Engineer", "start": "2024-09", "end": "2025-03", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
       "company": "Dataside",
-      "location": "São José dos Campos, Brazil",
+      "location": { "en": "São José dos Campos, Brazil", "pt": "São José dos Campos, Brasil" },
       "roles": [
-        { "id": "dataside-tech-lead", "title": "Tech Lead DataViz", "start": "2023-03", "end": "2024-08", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] },
-        { "id": "dataside-senior-analyst", "title": "Senior Power BI Analyst", "start": "2022-12", "end": "2023-02", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
+        { "id": "dataside-tech-lead", "title": "Tech Lead DataViz", "start": "2023-03", "end": "2024-08", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] },
+        { "id": "dataside-senior-analyst", "title": "Senior Power BI Analyst", "start": "2022-12", "end": "2023-02", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
       "company": "eNotas",
-      "location": "Belo Horizonte, Brazil",
+      "location": { "en": "Belo Horizonte, Brazil", "pt": "Belo Horizonte, Brasil" },
       "roles": [
-        { "id": "enotas-tech-lead", "title": "Tech Lead Data Analysis", "start": "2021-10", "end": "2022-11", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] },
-        { "id": "enotas-analyst", "title": "Data Analyst", "start": "2021-07", "end": "2021-09", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Figma", "Data Modeling", "ETL", "Dashboards"] },
-        { "id": "enotas-junior-analyst", "title": "Junior Data Analyst", "start": "2021-03", "end": "2021-06", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Figma", "Data Modeling", "ETL", "Dashboards"] }
+        { "id": "enotas-tech-lead", "title": "Tech Lead Data Analysis", "start": "2021-10", "end": "2022-11", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] },
+        { "id": "enotas-analyst", "title": { "en": "Data Analyst", "pt": "Analista de Dados Pleno" }, "start": "2021-07", "end": "2021-09", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Figma", "Data Modeling", "ETL", "Dashboards"] },
+        { "id": "enotas-junior-analyst", "title": { "en": "Junior Data Analyst", "pt": "Analista de Dados Júnior" }, "start": "2021-03", "end": "2021-06", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
       "company": "Sum Software",
-      "location": "Três Pontas, Brazil",
+      "location": { "en": "Três Pontas, Brazil", "pt": "Três Pontas, Brasil" },
       "roles": [
-        { "id": "sum-customer-support", "title": "Customer Support", "start": "2020-12", "end": "2021-02", "phase": "support", "mode": "On-site", "summary": "", "highlights": [], "skills": ["SQL"] }
+        { "id": "sum-customer-support", "title": { "en": "Customer Support", "pt": "Suporte ao Cliente" }, "start": "2020-12", "end": "2021-02", "phase": "support", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": "", "highlights": [], "skills": ["SQL"] }
       ]
     },
     {
-      "company": "Tecnotextil Group",
-      "location": "Três Pontas, Brazil",
+      "company": { "en": "Tecnotextil Group", "pt": "Grupo Tecnotextil" },
+      "location": { "en": "Três Pontas, Brazil", "pt": "Três Pontas, Brasil" },
       "roles": [
-        { "id": "tecnotextil-quality-analyst", "title": "Quality Analyst", "start": "2020-05", "end": "2020-11", "phase": "operations", "mode": "On-site", "summary": "", "highlights": [], "skills": ["Excel"] },
-        { "id": "tecnotextil-procedures-assistant", "title": "Procedures Assistant", "start": "2020-01", "end": "2020-04", "phase": "operations", "mode": "On-site", "summary": "", "highlights": [], "skills": ["Excel"] },
-        { "id": "tecnotextil-procedures-auxiliary", "title": "Procedures Auxiliary", "start": "2019-09", "end": "2019-12", "phase": "operations", "mode": "On-site", "summary": "", "highlights": [], "skills": ["Excel"] }
+        { "id": "tecnotextil-quality-analyst", "title": { "en": "Quality Analyst", "pt": "Analista de Qualidade" }, "start": "2020-05", "end": "2020-11", "phase": "operations", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": "", "highlights": [], "skills": ["Excel"] },
+        { "id": "tecnotextil-procedures-assistant", "title": { "en": "Procedures Assistant", "pt": "Assistente de Procedimentos" }, "start": "2020-01", "end": "2020-04", "phase": "operations", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": "", "highlights": [], "skills": ["Excel"] },
+        { "id": "tecnotextil-procedures-auxiliary", "title": { "en": "Procedures Auxiliary", "pt": "Auxiliar de Procedimentos" }, "start": "2019-09", "end": "2019-12", "phase": "operations", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": "", "highlights": [], "skills": ["Excel"] }
       ]
     },
     {
       "company": "Fundação Gorceix",
-      "location": "Ouro Preto, Brazil",
+      "location": { "en": "Ouro Preto, Brazil", "pt": "Ouro Preto, Brasil" },
       "roles": [
-        { "id": "gorceix-instructor", "title": "Course Instructor", "start": "2017-10", "end": "2018-12", "phase": "teaching", "mode": "On-site", "summary": "Taught the Minitab courses offered through the foundation's academic and professional training department.", "highlights": [], "skills": ["Minitab", "Mentoring"] }
+        { "id": "gorceix-instructor", "title": { "en": "Course Instructor", "pt": "Instrutor de Cursos" }, "start": "2017-10", "end": "2018-12", "phase": "teaching", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": { "en": "Taught the Minitab courses offered through the foundation's academic and professional training department.", "pt": "Professor dos cursos de Minitab oferecidos pela Fundação Gorceix, por meio do Departamento de Treinamento Acadêmico e Profissional (DETAP)." }, "highlights": [], "skills": ["Minitab", "Mentoring"] }
       ]
     }
   ],
 
   "work": [
     {
-      "title": "Advanced DAX corporate training",
-      "kind": "Training",
-      "date": "2024-12",
-      "summary": "Delivered Advanced DAX training in English as part of the Xperiun corporate training programme.",
-      "skills": ["DAX", "Microsoft Power BI", "Mentoring"],
-      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7290535083143303169/",
-      "linkLabel": "Read the post"
+      "title": "European Microsoft Fabric Community Conference",
+      "kind": { "en": "Community", "pt": "Comunidade" },
+      "period": "2024 – 2026",
+      "summary": { "en": "I've been part of every edition so far: Stockholm (2024), Vienna (2025) and Barcelona (2026). For me it's the yearly chance to meet the people behind the Fabric community, learn from them and share what I bring back.", "pt": "Participei de todas as edições até agora: Estocolmo (2024), Viena (2025) e Barcelona (2026). Para mim, é a chance anual de encontrar quem faz a comunidade de Fabric, aprender com essas pessoas e compartilhar o que trago de volta." },
+      "skills": ["Microsoft Fabric"],
+      "links": [
+        { "label": "Barcelona 2026", "url": "https://www.linkedin.com/posts/diego-scalioni_microsoftfabric-fabcon-barcelona-activity-7507881479021035521-dThN" },
+        { "label": { "en": "Vienna 2025", "pt": "Viena 2025" }, "url": "https://www.linkedin.com/posts/diego-scalioni_microsoft-fabric-msfabric-activity-7373451274614198273-CGAM" },
+        { "label": { "en": "Stockholm 2024", "pt": "Estocolmo 2024" }, "url": "https://www.linkedin.com/feed/update/urn:li:activity:7246445788405370880/" }
+      ]
     },
     {
-      "title": "End-to-end analytics project in Microsoft Fabric",
-      "kind": "Project",
+      "title": { "en": "Advanced DAX corporate training", "pt": "Treinamento corporativo de DAX Avançado" },
+      "kind": { "en": "Training", "pt": "Treinamento" },
+      "date": "2024-12",
+      "summary": { "en": "Delivered Advanced DAX training in English as part of the Xperiun corporate training programme.", "pt": "Treinamento de DAX Avançado ministrado em inglês, como parte dos treinamentos corporativos da Xperiun." },
+      "skills": ["DAX", "Microsoft Power BI", "Mentoring"],
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7290535083143303169/",
+      "linkLabel": { "en": "Read the post", "pt": "Ler a publicação" }
+    },
+    {
+      "title": { "en": "End-to-end analytics project in Microsoft Fabric", "pt": "Projeto de analytics de ponta a ponta no Microsoft Fabric" },
+      "kind": { "en": "Project", "pt": "Projeto" },
       "date": "2024-03",
-      "summary": "A team project built entirely in Fabric on public Brazilian bus-trip data. It uses a medallion architecture with lakehouses, PySpark notebooks, a data warehouse, pipelines and a Direct Lake semantic model serving more than 9 million records.",
+      "summary": { "en": "A team project built entirely in Fabric on public Brazilian bus-trip data. It uses a medallion architecture with lakehouses, PySpark notebooks, a data warehouse, pipelines and a Direct Lake semantic model serving more than 9 million records.", "pt": "Projeto em equipe desenvolvido 100% no Fabric, com dados públicos de viagens de ônibus no Brasil. Usa arquitetura medalhão com lakehouses, notebooks em PySpark, data warehouse, pipelines e um modelo semântico em Direct Lake com mais de 9 milhões de registros." },
       "skills": ["Microsoft Fabric", "PySpark", "SQL", "Microsoft Power BI", "Data Modeling", "ETL"],
       "url": "https://www.linkedin.com/feed/update/urn:li:activity:7176181363992117249/",
-      "linkLabel": "Read the post"
+      "linkLabel": { "en": "Read the post", "pt": "Ler a publicação" }
     }
   ],
 
   "education": [
-    { "degree": "Master Engineer in Lean Manufacturing", "level": "Postgraduate specialization, 400 hours", "school": "Pontifícia Universidade Católica de Minas Gerais", "start": "2019", "end": "2021" },
-    { "degree": "Industrial Engineering", "school": "Universidade Federal de Ouro Preto", "start": "2013", "end": "2018" }
+    { "degree": "Master Engineer in Lean Manufacturing", "level": { "en": "Postgraduate specialization, 400 hours", "pt": "Pós-graduação (especialização), 400 horas" }, "school": "Pontifícia Universidade Católica de Minas Gerais", "start": "2019", "end": "2021" },
+    { "degree": { "en": "Industrial Engineering", "pt": "Engenharia de Produção" }, "level": { "en": "Undergraduate (bachelor's degree), 10 semesters", "pt": "Graduação (bacharelado), 10 semestres" }, "school": "Universidade Federal de Ouro Preto", "start": "2013", "end": "2018" }
   ],
 
   "languages": [
-    { "name": "Portuguese", "level": "Native" },
-    { "name": "English", "level": "Full professional" },
-    { "name": "Spanish", "level": "Elementary" }
+    { "name": { "en": "Portuguese", "pt": "Português" }, "level": { "en": "Native", "pt": "Nativo" }, "flag": "br" },
+    { "name": { "en": "English", "pt": "Inglês" }, "level": { "en": "Full professional", "pt": "Profissional completo" }, "flag": "us" },
+    { "name": { "en": "Spanish", "pt": "Espanhol" }, "level": { "en": "Elementary", "pt": "Elementar" }, "flag": "es" }
   ],
 
   "certificationGroups": [
     { "id": "trainer", "name": "Microsoft Trainer", "style": "badges", "print": true },
     { "id": "associate", "name": "Associate", "style": "badges", "print": true },
     { "id": "fundamentals", "name": "Fundamentals", "style": "badges", "print": true },
-    { "id": "applied", "name": "Microsoft Applied Skills", "style": "list", "print": true },
-    { "id": "professional", "name": "Other professional certifications", "style": "list", "print": true },
-    { "id": "training", "name": "Courses and achievements", "style": "list", "collapsed": true, "print": false }
+    { "id": "applied", "name": { "en": "Microsoft Applied Skills", "pt": "Habilidades Aplicadas da Microsoft" }, "style": "list", "print": true },
+    { "id": "professional", "name": { "en": "Other professional certifications", "pt": "Outras certificações profissionais" }, "style": "list", "print": true },
+    { "id": "training", "name": { "en": "Courses and achievements", "pt": "Cursos e conquistas" }, "style": "list", "collapsed": true, "print": false }
   ],
 
   "certifications": [
@@ -172,23 +226,23 @@
     { "name": "Amazon Ads Foundations", "issuer": "Amazon", "group": "professional", "issued": "2024-10", "skills": [] },
     { "name": "Green Belt", "issuer": "RL&Associados", "group": "professional", "issued": "2015-05", "skills": [] },
 
-    { "name": "Data Engineering Fundamentals", "issuer": "Engenharia de Dados Academy", "group": "training", "issued": "2025-05", "skills": ["ETL"] },
+    { "name": { "en": "Data Engineering Fundamentals", "pt": "Fundamentos para Engenharia de Dados" }, "issuer": "Engenharia de Dados Academy", "group": "training", "issued": "2025-05", "skills": ["ETL"] },
     { "name": "Kusto Detective III", "issuer": "Microsoft", "group": "training", "issued": "2025-04", "skills": ["KQL"] },
     { "name": "Kusto Detective II", "issuer": "Microsoft", "group": "training", "issued": "2025-03", "skills": ["KQL"] },
     { "name": "Kusto Detective I", "issuer": "Microsoft", "group": "training", "issued": "2025-02", "skills": ["KQL"] },
     { "name": "New Kusto Detective", "issuer": "Microsoft", "group": "training", "issued": "2025-02", "skills": ["KQL"] },
-    { "name": "Apache Spark Fundamentals", "issuer": "Engenharia de Dados Academy", "group": "training", "issued": "2024-08", "skills": ["PySpark", "SQL"] },
-    { "name": "Databricks with Spark", "issuer": "Xperiun", "group": "training", "issued": "2024-04", "skills": ["Databricks", "PySpark"] },
+    { "name": { "en": "Apache Spark Fundamentals", "pt": "Fundamentos de Apache Spark" }, "issuer": "Engenharia de Dados Academy", "group": "training", "issued": "2024-08", "skills": ["PySpark", "SQL"] },
+    { "name": { "en": "Databricks with Spark", "pt": "Databricks com Spark" }, "issuer": "Xperiun", "group": "training", "issued": "2024-04", "skills": ["Databricks", "PySpark"] },
     { "name": "Power BI Specialist", "issuer": "Xperiun", "group": "training", "issued": "2022-11", "skills": ["Microsoft Power BI"] },
     { "name": "Power BI Service Architect", "issuer": "Xperiun", "group": "training", "issued": "2022-11", "skills": ["Microsoft Power BI"] },
     { "name": "Data Visualization Professional", "issuer": "Xperiun", "group": "training", "issued": "2022-11", "skills": ["Dashboards"] },
     { "name": "DAX Master", "issuer": "Xperiun", "group": "training", "issued": "2022-08", "skills": ["DAX"] },
     { "name": "Data Modeling Expert", "issuer": "Xperiun", "group": "training", "issued": "2022-06", "skills": ["Data Modeling"] },
     { "name": "Power Query Associate", "issuer": "Xperiun", "group": "training", "issued": "2022-05", "skills": ["Power Query"] },
-    { "name": "Power BI Bootcamp: Agribusiness Edition", "issuer": "Xperiun", "group": "training", "issued": "2022-04", "skills": ["Microsoft Power BI"] },
-    { "name": "Express Track", "issuer": "Xperiun", "group": "training", "issued": "2022-02", "skills": ["Microsoft Power BI"] },
-    { "name": "Big Data Fundamentals 2.0", "issuer": "Data Science Academy", "group": "training", "issued": "2020-07", "skills": [] },
-    { "name": "Introduction to Data Science 2.0", "issuer": "Data Science Academy", "group": "training", "issued": "2020-06", "skills": [] },
-    { "name": "Big Data Analytics with R and Microsoft Azure Machine Learning", "issuer": "Data Science Academy", "group": "training", "issued": "2020-05", "skills": ["Microsoft Azure"] }
+    { "name": { "en": "Power BI Bootcamp: Agribusiness Edition", "pt": "Bootcamp Power BI - Edição Agro" }, "issuer": "Xperiun", "group": "training", "issued": "2022-04", "skills": ["Microsoft Power BI"] },
+    { "name": { "en": "Express Track", "pt": "Trilha Express" }, "issuer": "Xperiun", "group": "training", "issued": "2022-02", "skills": ["Microsoft Power BI"] },
+    { "name": { "en": "Big Data Fundamentals 2.0", "pt": "Big Data Fundamentos 2.0" }, "issuer": "Data Science Academy", "group": "training", "issued": "2020-07", "skills": [] },
+    { "name": { "en": "Introduction to Data Science 2.0", "pt": "Introdução a Ciência de Dados 2.0" }, "issuer": "Data Science Academy", "group": "training", "issued": "2020-06", "skills": [] },
+    { "name": { "en": "Big Data Analytics with R and Microsoft Azure Machine Learning", "pt": "Big Data Analytics com R e Microsoft Azure Machine Learning" }, "issuer": "Data Science Academy", "group": "training", "issued": "2020-05", "skills": ["Microsoft Azure"] }
   ]
 }

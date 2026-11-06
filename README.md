@@ -26,14 +26,16 @@ Then open <http://localhost:8124>.
 
 All content is in [`data/resume.json`](data/resume.json). You shouldn't need to change any code.
 
+**Languages:** any text can be written as `{ "en": "Remote", "pt": "Remoto" }`. A plain value such as `"ETL"` is used in both languages, and a missing `pt` falls back to `en`. Interface wording is under `ui`. The page starts in the visitor's saved choice, otherwise in Portuguese if their browser is set to it, otherwise in English.
+
 | Key | What it holds |
 | --- | --- |
 | `profile` | Name, title, summary and links. A link's `icon` can be `linkedin`, `github`, `microsoft` or `mail` |
 | `phases` | Career phases and their timeline colours |
 | `skills` | The list behind the skill filter and the toolkit. `group` sets the toolkit heading |
 | `experience` | Companies, each with `roles` |
-| `work` | Featured projects and training |
-| `education`, `languages` | Shown at the top of the page |
+| `work` | Featured projects, training and community. Use `date` or a free-text `period`, and `url` or a `links` list |
+| `education`, `languages` | Shown at the top of the page. A language's `flag` matches a file in `assets/flags/` |
 | `certificationGroups`, `certifications` | Certifications and how they're grouped |
 
 **Roles** look like this:
@@ -56,7 +58,7 @@ All content is in [`data/resume.json`](data/resume.json). You shouldn't need to 
 - Empty fields are hidden, so you can fill them in gradually.
 - `id` becomes the shareable link, so avoid changing it once you've shared one.
 
-**Skills** must match a name in `skills` exactly. If one doesn't, the browser console logs a warning. The dropdown sorts them alphabetically and leaves out any skill with no roles, certifications or work attached.
+**Skills** must match a `name` in `skills` exactly, in English, in every language. A skill's optional `label` is the translated text that's displayed. If a name doesn't match, the browser console logs a warning. The dropdown sorts them alphabetically and leaves out any skill with no roles, certifications or work attached.
 
 **To add a certification badge**, put the image in [`assets/badges/`](assets/badges/) and set its `badge` path. `certificationGroups` controls the layout (`badges` or `list`), whether a group starts `collapsed`, and whether it appears in `print`.
 
