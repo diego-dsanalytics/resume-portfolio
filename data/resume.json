@@ -45,39 +45,39 @@
       "company": "BI4ALL",
       "location": "",
       "roles": [
-        { "id": "bi4all-senior-consultant", "title": "Senior Analytics Consultant", "start": "2026-04", "end": null, "phase": "data", "mode": "", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Microsoft Fabric"] },
-        { "id": "bi4all-consultant", "title": "Analytics Consultant", "start": "2025-10", "end": "2026-03", "phase": "data", "mode": "Hybrid", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Microsoft Fabric"] }
+        { "id": "bi4all-senior-consultant", "title": "Senior Analytics Consultant", "start": "2026-04", "end": null, "phase": "data", "mode": "", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] },
+        { "id": "bi4all-consultant", "title": "Analytics Consultant", "start": "2025-10", "end": "2026-03", "phase": "data", "mode": "Hybrid", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] }
       ]
     },
     {
       "company": "Capgemini Engineering",
       "location": "Porto, Portugal",
       "roles": [
-        { "id": "capgemini-consultant-engineer", "title": "Consultant Engineer", "start": "2025-04", "end": "2025-09", "phase": "data", "mode": "Hybrid", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Data Modeling", "Dashboards", "ETL"] }
+        { "id": "capgemini-consultant-engineer", "title": "Consultant Engineer", "start": "2025-04", "end": "2025-09", "phase": "data", "mode": "Hybrid", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
       "company": "Quartile",
       "location": "New York, United States",
       "roles": [
-        { "id": "quartile-analytics-engineer", "title": "Analytics Engineer", "start": "2024-09", "end": "2025-03", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Data Modeling", "Dashboards", "ETL", "Databricks", "PySpark"] }
+        { "id": "quartile-analytics-engineer", "title": "Analytics Engineer", "start": "2024-09", "end": "2025-03", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
       "company": "Dataside",
       "location": "São José dos Campos, Brazil",
       "roles": [
-        { "id": "dataside-tech-lead", "title": "Tech Lead DataViz", "start": "2023-03", "end": "2024-08", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Figma", "Dashboards", "Data Modeling", "ETL", "SQL", "Mentoring"] },
-        { "id": "dataside-senior-analyst", "title": "Senior Power BI Analyst", "start": "2022-12", "end": "2023-02", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Figma", "Dashboards", "Data Modeling", "ETL", "SQL"] }
+        { "id": "dataside-tech-lead", "title": "Tech Lead DataViz", "start": "2023-03", "end": "2024-08", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] },
+        { "id": "dataside-senior-analyst", "title": "Senior Power BI Analyst", "start": "2022-12", "end": "2023-02", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
       "company": "eNotas",
       "location": "Belo Horizonte, Brazil",
       "roles": [
-        { "id": "enotas-tech-lead", "title": "Tech Lead Data Analysis", "start": "2021-10", "end": "2022-11", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Python", "Excel", "Figma", "Dashboards", "Data Modeling", "ETL"] },
-        { "id": "enotas-analyst", "title": "Data Analyst", "start": "2021-07", "end": "2021-09", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Python", "Excel", "Figma", "Dashboards", "Data Modeling", "ETL"] },
-        { "id": "enotas-junior-analyst", "title": "Junior Data Analyst", "start": "2021-03", "end": "2021-06", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Python", "Excel", "Figma", "Dashboards", "Data Modeling", "ETL"] }
+        { "id": "enotas-tech-lead", "title": "Tech Lead Data Analysis", "start": "2021-10", "end": "2022-11", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] },
+        { "id": "enotas-analyst", "title": "Data Analyst", "start": "2021-07", "end": "2021-09", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] },
+        { "id": "enotas-junior-analyst", "title": "Junior Data Analyst", "start": "2021-03", "end": "2021-06", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
