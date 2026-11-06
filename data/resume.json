@@ -1,0 +1,194 @@
+{
+  "profile": {
+    "name": "Diego Scalioni",
+    "title": "Analytics Engineer",
+    "credentials": "Microsoft Certified Trainer",
+    "location": "Portugal",
+    "summary": "Passionate about technology, statistics and storytelling with data. I work with Power BI and Microsoft Fabric every day, and I also dabble in Databricks, Python, APIs and automation. I'm an industrial engineer by training, with a postgraduate degree in Lean Manufacturing.",
+    "links": [
+      { "label": "LinkedIn", "icon": "linkedin", "display": "linkedin.com/in/diego-scalioni", "url": "https://www.linkedin.com/in/diego-scalioni/" },
+      { "label": "GitHub", "icon": "github", "display": "github.com/diego-dsanalytics", "url": "https://github.com/diego-dsanalytics" },
+      { "label": "Microsoft Learn", "icon": "microsoft", "display": "learn.microsoft.com/en-us/users/diegochagas-6867", "url": "https://learn.microsoft.com/en-us/users/diegochagas-6867/" },
+      { "label": "Email", "icon": "mail", "display": "diegoscalionitp@gmail.com", "url": "mailto:diegoscalionitp@gmail.com" }
+    ]
+  },
+
+  "phases": [
+    { "id": "data", "name": "Data & analytics" },
+    { "id": "support", "name": "Customer support" },
+    { "id": "operations", "name": "Operations & quality" },
+    { "id": "teaching", "name": "Teaching" }
+  ],
+
+  "skills": [
+    { "name": "Microsoft Power BI", "group": "Core" },
+    { "name": "Microsoft Fabric", "group": "Core" },
+    { "name": "DAX", "group": "Core" },
+    { "name": "Power Query", "group": "Core" },
+    { "name": "SQL", "group": "Core" },
+    { "name": "PySpark", "group": "Core" },
+    { "name": "Excel", "group": "Core" },
+    { "name": "Python", "group": "Also" },
+    { "name": "Databricks", "group": "Also" },
+    { "name": "KQL", "group": "Also" },
+    { "name": "Microsoft Azure", "group": "Also" },
+    { "name": "Figma", "group": "Also" },
+    { "name": "Minitab", "group": "Also" },
+    { "name": "Data Modeling", "group": "Practices" },
+    { "name": "ETL", "group": "Practices" },
+    { "name": "Dashboards", "group": "Practices" },
+    { "name": "Mentoring", "group": "Practices" }
+  ],
+
+  "experience": [
+    {
+      "company": "BI4ALL",
+      "location": "",
+      "roles": [
+        { "id": "bi4all-senior-consultant", "title": "Senior Analytics Consultant", "start": "2026-04", "end": null, "phase": "data", "mode": "", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Microsoft Fabric"] },
+        { "id": "bi4all-consultant", "title": "Analytics Consultant", "start": "2025-10", "end": "2026-03", "phase": "data", "mode": "Hybrid", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Microsoft Fabric"] }
+      ]
+    },
+    {
+      "company": "Capgemini Engineering",
+      "location": "Porto, Portugal",
+      "roles": [
+        { "id": "capgemini-consultant-engineer", "title": "Consultant Engineer", "start": "2025-04", "end": "2025-09", "phase": "data", "mode": "Hybrid", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Data Modeling", "Dashboards", "ETL"] }
+      ]
+    },
+    {
+      "company": "Quartile",
+      "location": "New York, United States",
+      "roles": [
+        { "id": "quartile-analytics-engineer", "title": "Analytics Engineer", "start": "2024-09", "end": "2025-03", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Data Modeling", "Dashboards", "ETL", "Databricks", "PySpark"] }
+      ]
+    },
+    {
+      "company": "Dataside",
+      "location": "São José dos Campos, Brazil",
+      "roles": [
+        { "id": "dataside-tech-lead", "title": "Tech Lead DataViz", "start": "2023-03", "end": "2024-08", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Figma", "Dashboards", "Data Modeling", "ETL", "SQL", "Mentoring"] },
+        { "id": "dataside-senior-analyst", "title": "Senior Power BI Analyst", "start": "2022-12", "end": "2023-02", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Figma", "Dashboards", "Data Modeling", "ETL", "SQL"] }
+      ]
+    },
+    {
+      "company": "eNotas",
+      "location": "Belo Horizonte, Brazil",
+      "roles": [
+        { "id": "enotas-tech-lead", "title": "Tech Lead Data Analysis", "start": "2021-10", "end": "2022-11", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Python", "Excel", "Figma", "Dashboards", "Data Modeling", "ETL"] },
+        { "id": "enotas-analyst", "title": "Data Analyst", "start": "2021-07", "end": "2021-09", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Python", "Excel", "Figma", "Dashboards", "Data Modeling", "ETL"] },
+        { "id": "enotas-junior-analyst", "title": "Junior Data Analyst", "start": "2021-03", "end": "2021-06", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "Python", "Excel", "Figma", "Dashboards", "Data Modeling", "ETL"] }
+      ]
+    },
+    {
+      "company": "Sum Software",
+      "location": "Três Pontas, Brazil",
+      "roles": [
+        { "id": "sum-customer-support", "title": "Customer Support", "start": "2020-12", "end": "2021-02", "phase": "support", "mode": "On-site", "summary": "", "highlights": [], "skills": ["SQL"] }
+      ]
+    },
+    {
+      "company": "Tecnotextil Group",
+      "location": "Três Pontas, Brazil",
+      "roles": [
+        { "id": "tecnotextil-quality-analyst", "title": "Quality Analyst", "start": "2020-05", "end": "2020-11", "phase": "operations", "mode": "On-site", "summary": "", "highlights": [], "skills": ["Excel"] },
+        { "id": "tecnotextil-procedures-assistant", "title": "Procedures Assistant", "start": "2020-01", "end": "2020-04", "phase": "operations", "mode": "On-site", "summary": "", "highlights": [], "skills": ["Excel"] },
+        { "id": "tecnotextil-procedures-auxiliary", "title": "Procedures Auxiliary", "start": "2019-09", "end": "2019-12", "phase": "operations", "mode": "On-site", "summary": "", "highlights": [], "skills": ["Excel"] }
+      ]
+    },
+    {
+      "company": "Fundação Gorceix",
+      "location": "Ouro Preto, Brazil",
+      "roles": [
+        { "id": "gorceix-instructor", "title": "Course Instructor", "start": "2017-10", "end": "2018-12", "phase": "teaching", "mode": "On-site", "summary": "Taught the Minitab courses offered through the foundation's academic and professional training department.", "highlights": [], "skills": ["Minitab", "Mentoring"] }
+      ]
+    }
+  ],
+
+  "work": [
+    {
+      "title": "Advanced DAX corporate training",
+      "kind": "Training",
+      "date": "2024-12",
+      "summary": "Delivered Advanced DAX training in English as part of the Xperiun corporate training programme.",
+      "skills": ["DAX", "Microsoft Power BI", "Mentoring"],
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7290535083143303169/",
+      "linkLabel": "Read the post"
+    },
+    {
+      "title": "End-to-end analytics project in Microsoft Fabric",
+      "kind": "Project",
+      "date": "2024-03",
+      "summary": "A team project built entirely in Fabric on public Brazilian bus-trip data. It uses a medallion architecture with lakehouses, PySpark notebooks, a data warehouse, pipelines and a Direct Lake semantic model serving more than 9 million records.",
+      "skills": ["Microsoft Fabric", "PySpark", "SQL", "Microsoft Power BI", "Data Modeling", "ETL"],
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7176181363992117249/",
+      "linkLabel": "Read the post"
+    }
+  ],
+
+  "education": [
+    { "degree": "Master Engineer in Lean Manufacturing", "level": "Postgraduate specialization, 400 hours", "school": "Pontifícia Universidade Católica de Minas Gerais", "start": "2019", "end": "2021" },
+    { "degree": "Industrial Engineering", "school": "Universidade Federal de Ouro Preto", "start": "2013", "end": "2018" }
+  ],
+
+  "languages": [
+    { "name": "Portuguese", "level": "Native" },
+    { "name": "English", "level": "Full professional" },
+    { "name": "Spanish", "level": "Elementary" }
+  ],
+
+  "certificationGroups": [
+    { "id": "trainer", "name": "Microsoft Trainer", "style": "badges", "print": true },
+    { "id": "associate", "name": "Associate", "style": "badges", "print": true },
+    { "id": "fundamentals", "name": "Fundamentals", "style": "badges", "print": true },
+    { "id": "applied", "name": "Microsoft Applied Skills", "style": "list", "print": true },
+    { "id": "professional", "name": "Other professional certifications", "style": "list", "print": true },
+    { "id": "training", "name": "Courses and achievements", "style": "list", "collapsed": true, "print": false }
+  ],
+
+  "certifications": [
+    { "name": "Microsoft Certified Trainer", "code": "MCT", "issuer": "Microsoft", "group": "trainer", "issued": "2025-01", "expires": "2027-01", "badge": "assets/badges/mct.png", "skills": ["Mentoring"] },
+
+    { "name": "Fabric Data Engineer Associate", "code": "DP-700", "issuer": "Microsoft", "group": "associate", "issued": "2025-03", "expires": "2027-03", "badge": "assets/badges/dp-700.png", "skills": ["Microsoft Fabric", "PySpark", "SQL", "KQL", "ETL"] },
+    { "name": "Fabric Analytics Engineer Associate", "code": "DP-600", "issuer": "Microsoft", "group": "associate", "issued": "2024-03", "expires": "2027-03", "badge": "assets/badges/dp-600.png", "skills": ["Microsoft Fabric", "Microsoft Power BI", "DAX", "SQL", "PySpark", "Data Modeling"] },
+    { "name": "Azure Enterprise Data Analyst Associate", "code": "DP-500", "issuer": "Microsoft", "group": "associate", "issued": "2023-12", "expires": "2025-12", "retired": true, "badge": "assets/badges/dp-500.png", "skills": ["Microsoft Azure", "Microsoft Power BI", "DAX", "SQL"] },
+    { "name": "Azure Data Scientist Associate", "code": "DP-100", "issuer": "Microsoft", "group": "associate", "issued": "2023-02", "expires": "2027-02", "badge": "assets/badges/dp-100.png", "skills": ["Microsoft Azure", "Python"] },
+    { "name": "Power BI Data Analyst Associate", "code": "PL-300", "issuer": "Microsoft", "group": "associate", "issued": "2022-10", "expires": "2027-10", "badge": "assets/badges/pl-300.png", "skills": ["Microsoft Power BI", "DAX", "Power Query", "Data Modeling", "Dashboards"] },
+
+    { "name": "GitHub Foundations", "code": "GH-900", "issuer": "GitHub", "group": "fundamentals", "issued": "2026-01", "badge": "assets/badges/gh-900.svg", "skills": [] },
+    { "name": "Microsoft 365 Fundamentals", "code": "MS-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2025-02", "badge": "assets/badges/ms-900.png", "skills": [] },
+    { "name": "Azure Fundamentals", "code": "AZ-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2024-06", "badge": "assets/badges/az-900.png", "skills": ["Microsoft Azure"] },
+    { "name": "Azure AI Fundamentals", "code": "AI-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2023-08", "badge": "assets/badges/ai-900.png", "skills": ["Microsoft Azure"] },
+    { "name": "Power Platform Fundamentals", "code": "PL-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2023-01", "badge": "assets/badges/pl-900.png", "skills": ["Microsoft Power BI"] },
+    { "name": "Azure Data Fundamentals", "code": "DP-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2022-07", "badge": "assets/badges/dp-900.png", "skills": ["Microsoft Azure", "SQL"] },
+
+    { "name": "Implement a Real-Time Intelligence solution with Microsoft Fabric", "issuer": "Microsoft", "group": "applied", "issued": "2024-10", "skills": ["Microsoft Fabric", "KQL"] },
+    { "name": "Implement a data warehouse in Microsoft Fabric", "issuer": "Microsoft", "group": "applied", "issued": "2024-05", "skills": ["Microsoft Fabric", "SQL"] },
+    { "name": "Implement a lakehouse in Microsoft Fabric", "issuer": "Microsoft", "group": "applied", "issued": "2024-05", "skills": ["Microsoft Fabric", "PySpark"] },
+
+    { "name": "DAX Tools", "issuer": "SQLBI", "group": "professional", "issued": "2025-05", "skills": ["DAX"] },
+    { "name": "Tabular Editor Certification", "issuer": "Tabular Editor", "group": "professional", "issued": "2024-10", "skills": ["Microsoft Power BI", "DAX", "Data Modeling"] },
+    { "name": "Databricks Lakehouse Fundamentals", "issuer": "Databricks", "group": "professional", "issued": "2023-07", "skills": ["Databricks"] },
+    { "name": "Amazon Ads Foundations", "issuer": "Amazon", "group": "professional", "issued": "2024-10", "skills": [] },
+    { "name": "Green Belt", "issuer": "RL&Associados", "group": "professional", "issued": "2015-05", "skills": [] },
+
+    { "name": "Data Engineering Fundamentals", "issuer": "Engenharia de Dados Academy", "group": "training", "issued": "2025-05", "skills": ["ETL"] },
+    { "name": "Kusto Detective III", "issuer": "Microsoft", "group": "training", "issued": "2025-04", "skills": ["KQL"] },
+    { "name": "Kusto Detective II", "issuer": "Microsoft", "group": "training", "issued": "2025-03", "skills": ["KQL"] },
+    { "name": "Kusto Detective I", "issuer": "Microsoft", "group": "training", "issued": "2025-02", "skills": ["KQL"] },
+    { "name": "New Kusto Detective", "issuer": "Microsoft", "group": "training", "issued": "2025-02", "skills": ["KQL"] },
+    { "name": "Apache Spark Fundamentals", "issuer": "Engenharia de Dados Academy", "group": "training", "issued": "2024-08", "skills": ["PySpark", "SQL"] },
+    { "name": "Databricks with Spark", "issuer": "Xperiun", "group": "training", "issued": "2024-04", "skills": ["Databricks", "PySpark"] },
+    { "name": "Power BI Specialist", "issuer": "Xperiun", "group": "training", "issued": "2022-11", "skills": ["Microsoft Power BI"] },
+    { "name": "Power BI Service Architect", "issuer": "Xperiun", "group": "training", "issued": "2022-11", "skills": ["Microsoft Power BI"] },
+    { "name": "Data Visualization Professional", "issuer": "Xperiun", "group": "training", "issued": "2022-11", "skills": ["Dashboards"] },
+    { "name": "DAX Master", "issuer": "Xperiun", "group": "training", "issued": "2022-08", "skills": ["DAX"] },
+    { "name": "Data Modeling Expert", "issuer": "Xperiun", "group": "training", "issued": "2022-06", "skills": ["Data Modeling"] },
+    { "name": "Power Query Associate", "issuer": "Xperiun", "group": "training", "issued": "2022-05", "skills": ["Power Query"] },
+    { "name": "Power BI Bootcamp: Agribusiness Edition", "issuer": "Xperiun", "group": "training", "issued": "2022-04", "skills": ["Microsoft Power BI"] },
+    { "name": "Express Track", "issuer": "Xperiun", "group": "training", "issued": "2022-02", "skills": ["Microsoft Power BI"] },
+    { "name": "Big Data Fundamentals 2.0", "issuer": "Data Science Academy", "group": "training", "issued": "2020-07", "skills": [] },
+    { "name": "Introduction to Data Science 2.0", "issuer": "Data Science Academy", "group": "training", "issued": "2020-06", "skills": [] },
+    { "name": "Big Data Analytics with R and Microsoft Azure Machine Learning", "issuer": "Data Science Academy", "group": "training", "issued": "2020-05", "skills": ["Microsoft Azure"] }
+  ]
+}
