@@ -68,7 +68,7 @@
       "location": "São José dos Campos, Brazil",
       "roles": [
         { "id": "dataside-tech-lead", "title": "Tech Lead DataViz", "start": "2023-03", "end": "2024-08", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] },
-        { "id": "dataside-senior-analyst", "title": "Senior Power BI Analyst", "start": "2022-12", "end": "2023-02", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
+        { "id": "dataside-senior-analyst", "title": "Senior Power BI Analyst", "start": "2022-12", "end": "2023-02", "phase": "data", "mode": "Remote", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
     },
     {
