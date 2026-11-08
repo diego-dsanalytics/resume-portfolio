@@ -32,6 +32,19 @@
     "validUntilInline": { "en": "valid until {date}", "pt": "válida até {date}" },
     "validUntil": { "en": "Valid until {date}", "pt": "Válida até {date}" },
     "readMore": { "en": "Read more", "pt": "Ler mais" },
+    "certHelp": { "en": "Select a certification for the details.", "pt": "Selecione uma certificação para ver os detalhes." },
+    "certAbout": { "en": "What it validates", "pt": "O que ela valida" },
+    "skillsMeasured": { "en": "Skills measured", "pt": "Habilidades avaliadas" },
+    "issuer": { "en": "Issuer", "pt": "Emissor" },
+    "issued": { "en": "Issued", "pt": "Emitida em" },
+    "validUntilLabel": { "en": "Valid until", "pt": "Válida até" },
+    "expiredLabel": { "en": "Expired", "pt": "Expirou em" },
+    "renewal": { "en": "Validity", "pt": "Validade" },
+    "linksHeading": { "en": "Links", "pt": "Links" },
+    "certPage": { "en": "Certification page", "pt": "Página da certificação" },
+    "studyGuide": { "en": "Study guide", "pt": "Guia de estudo" },
+    "verifyCredential": { "en": "Verify the credential", "pt": "Verificar a credencial" },
+    "alsoIn": { "en": "Also in {group}", "pt": "Também em {group}" },
     "and": { "en": "and", "pt": "e" },
     "months": { "en": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "pt": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"] },
     "role": { "en": ["role", "roles"], "pt": ["cargo", "cargos"] },
@@ -192,29 +205,105 @@
   ],
 
   "certificationGroups": [
-    { "id": "trainer", "name": "Microsoft Trainer", "style": "badges", "print": true },
-    { "id": "associate", "name": "Associate", "style": "badges", "print": true },
-    { "id": "fundamentals", "name": "Fundamentals", "style": "badges", "print": true },
-    { "id": "applied", "name": { "en": "Microsoft Applied Skills", "pt": "Habilidades Aplicadas da Microsoft" }, "style": "list", "print": true },
-    { "id": "professional", "name": { "en": "Other professional certifications", "pt": "Outras certificações profissionais" }, "style": "list", "print": true },
-    { "id": "training", "name": { "en": "Courses and achievements", "pt": "Cursos e conquistas" }, "style": "list", "collapsed": true, "print": false }
+    { "id": "trainer", "name": "Microsoft Trainer", "style": "badges", "print": true, "validity": { "en": "Annual membership, renewed with proof of training deliveries", "pt": "Associação anual, renovada com a comprovação de treinamentos ministrados" } },
+    { "id": "associate", "name": "Associate", "style": "badges", "print": true, "validity": { "en": "12 months, renewed with a free online assessment", "pt": "12 meses, renovada com uma avaliação online gratuita" } },
+    { "id": "fundamentals", "name": "Fundamentals", "style": "badges", "print": true, "validity": { "en": "Does not expire", "pt": "Não expira" } },
+    { "id": "applied", "name": { "en": "Microsoft Applied Skills", "pt": "Habilidades Aplicadas da Microsoft" }, "style": "list", "print": true, "validity": { "en": "Does not expire", "pt": "Não expira" } },
+    { "id": "professional", "name": { "en": "Other professional certifications", "pt": "Outras certificações profissionais" }, "style": "list", "print": true, "drawer": false },
+    { "id": "training", "name": { "en": "Courses and achievements", "pt": "Cursos e conquistas" }, "style": "list", "collapsed": true, "print": false, "drawer": false }
   ],
 
   "certifications": [
-    { "name": "Microsoft Certified Trainer", "code": "MCT", "issuer": "Microsoft", "group": "trainer", "issued": "2025-01", "expires": "2027-01", "badge": "assets/badges/mct.png", "skills": ["Mentoring"] },
+    {
+      "name": "Microsoft Certified Trainer", "code": "MCT", "issuer": "Microsoft", "group": "trainer", "issued": "2025-01", "expires": "2027-01", "badge": "assets/badges/mct.png", "skills": ["Mentoring"],
+      "about": { "en": "Membership of Microsoft's program for trainers who deliver official Microsoft courseware. It requires a valid qualifying certification and verified instructional skills.", "pt": "Programa da Microsoft para instrutores que ministram os treinamentos oficiais da Microsoft. Exige uma certificação qualificadora válida e a comprovação de habilidades de ensino." },
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/mct-certification"
+    },
 
-    { "name": "Fabric Data Engineer Associate", "code": "DP-700", "issuer": "Microsoft", "group": "associate", "issued": "2025-03", "expires": "2027-03", "badge": "assets/badges/dp-700.png", "skills": ["Microsoft Fabric", "PySpark", "SQL", "KQL", "ETL"] },
-    { "name": "Fabric Analytics Engineer Associate", "code": "DP-600", "issuer": "Microsoft", "group": "associate", "issued": "2024-03", "expires": "2027-03", "badge": "assets/badges/dp-600.png", "skills": ["Microsoft Fabric", "Microsoft Power BI", "DAX", "SQL", "PySpark", "Data Modeling"] },
-    { "name": "Azure Enterprise Data Analyst Associate", "code": "DP-500", "issuer": "Microsoft", "group": "associate", "issued": "2023-12", "expires": "2025-12", "retired": true, "badge": "assets/badges/dp-500.png", "skills": ["Microsoft Azure", "Microsoft Power BI", "DAX", "SQL"] },
-    { "name": "Azure Data Scientist Associate", "code": "DP-100", "issuer": "Microsoft", "group": "associate", "issued": "2023-02", "expires": "2027-02", "badge": "assets/badges/dp-100.png", "skills": ["Microsoft Azure", "Python"] },
-    { "name": "Power BI Data Analyst Associate", "code": "PL-300", "issuer": "Microsoft", "group": "associate", "issued": "2022-10", "expires": "2027-10", "badge": "assets/badges/pl-300.png", "skills": ["Microsoft Power BI", "DAX", "Power Query", "Data Modeling", "Dashboards"] },
+    {
+      "name": "Fabric Data Engineer Associate", "code": "DP-700", "issuer": "Microsoft", "group": "associate", "issued": "2025-03", "expires": "2027-03", "badge": "assets/badges/dp-700.png", "skills": ["Microsoft Fabric", "PySpark", "SQL", "KQL", "ETL"],
+      "about": { "en": "Validates ingesting, transforming, securing and operating data engineering solutions in Microsoft Fabric, with Spark, SQL and KQL.", "pt": "Valida a ingestão, a transformação, a segurança e a operação de soluções de engenharia de dados no Microsoft Fabric, com Spark, SQL e KQL." },
+      "domains": [
+        { "name": { "en": "Implement and manage an analytics solution", "pt": "Implementar e gerenciar uma solução de análise" }, "weight": "30–35%" },
+        { "name": { "en": "Ingest and transform data", "pt": "Ingerir e transformar dados" }, "weight": "30–35%" },
+        { "name": { "en": "Monitor and optimize an analytics solution", "pt": "Monitorar e otimizar uma solução de análise" }, "weight": "30–35%" }
+      ],
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/exams/dp-700/",
+      "studyGuideUrl": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-700"
+    },
+    {
+      "name": "Fabric Analytics Engineer Associate", "code": "DP-600", "issuer": "Microsoft", "group": "associate", "issued": "2024-03", "expires": "2027-03", "badge": "assets/badges/dp-600.png", "skills": ["Microsoft Fabric", "Microsoft Power BI", "DAX", "SQL", "PySpark", "Data Modeling"],
+      "about": { "en": "Validates designing, building and deploying enterprise-scale analytics in Microsoft Fabric: lakehouses, warehouses, semantic models and Direct Lake.", "pt": "Valida o design, a criação e a implantação de soluções de análise em escala corporativa no Microsoft Fabric: lakehouses, warehouses, modelos semânticos e Direct Lake." },
+      "domains": [
+        { "name": { "en": "Plan, implement and manage an analytics solution", "pt": "Planejar, implementar e gerenciar uma solução de análise" }, "weight": "10–15%" },
+        { "name": { "en": "Prepare and serve data", "pt": "Preparar e disponibilizar dados" }, "weight": "40–45%" },
+        { "name": { "en": "Implement and manage semantic models", "pt": "Implementar e gerenciar modelos semânticos" }, "weight": "20–25%" },
+        { "name": { "en": "Explore and analyze data", "pt": "Explorar e analisar dados" }, "weight": "20–25%" }
+      ],
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/exams/dp-600/",
+      "studyGuideUrl": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-600"
+    },
+    {
+      "name": "Azure Enterprise Data Analyst Associate", "code": "DP-500", "issuer": "Microsoft", "group": "associate", "issued": "2023-12", "expires": "2025-12", "retired": true, "badge": "assets/badges/dp-500.png", "skills": ["Microsoft Azure", "Microsoft Power BI", "DAX", "SQL"],
+      "about": { "en": "Validated designing and building enterprise-scale analytics solutions with Microsoft Purview, Azure Synapse Analytics and Power BI.", "pt": "Validava o design e a criação de soluções de análise em escala corporativa com Microsoft Purview, Azure Synapse Analytics e Power BI." }
+    },
+    {
+      "name": "Azure Data Scientist Associate", "code": "DP-100", "issuer": "Microsoft", "group": "associate", "issued": "2023-02", "expires": "2027-02", "badge": "assets/badges/dp-100.png", "skills": ["Microsoft Azure", "Python"],
+      "about": { "en": "Validates applying data science and machine learning on Azure, with Azure Machine Learning and MLflow, and optimizing language models for AI applications.", "pt": "Valida a aplicação de ciência de dados e machine learning no Azure, com Azure Machine Learning e MLflow, e a otimização de modelos de linguagem para aplicações de IA." },
+      "domains": [
+        { "name": { "en": "Design and prepare a machine learning solution", "pt": "Projetar e preparar uma solução de machine learning" }, "weight": "20–25%" },
+        { "name": { "en": "Explore data and run experiments", "pt": "Explorar dados e executar experimentos" }, "weight": "20–25%" },
+        { "name": { "en": "Train and deploy models", "pt": "Treinar e implantar modelos" }, "weight": "25–30%" },
+        { "name": { "en": "Optimize language models for AI applications", "pt": "Otimizar modelos de linguagem para aplicações de IA" }, "weight": "25–30%" }
+      ],
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-data-scientist/",
+      "studyGuideUrl": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-100"
+    },
+    {
+      "name": "Power BI Data Analyst Associate", "code": "PL-300", "issuer": "Microsoft", "group": "associate", "issued": "2022-10", "expires": "2027-10", "badge": "assets/badges/pl-300.png", "skills": ["Microsoft Power BI", "DAX", "Power Query", "Data Modeling", "Dashboards"],
+      "about": { "en": "Validates preparing, modeling, visualizing and securing data in Power BI, from Power Query and DAX to report design and workspace security.", "pt": "Valida a preparação, a modelagem, a visualização e a segurança de dados no Power BI, de Power Query e DAX ao design de relatórios e à segurança de workspaces." },
+      "domains": [
+        { "name": { "en": "Prepare the data", "pt": "Preparar os dados" }, "weight": "25–30%" },
+        { "name": { "en": "Model the data", "pt": "Modelar os dados" }, "weight": "25–30%" },
+        { "name": { "en": "Visualize and analyze the data", "pt": "Visualizar e analisar os dados" }, "weight": "25–30%" },
+        { "name": { "en": "Manage and secure Power BI", "pt": "Gerenciar e proteger o Power BI" }, "weight": "15–20%" }
+      ],
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/exams/pl-300/",
+      "studyGuideUrl": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-300"
+    },
 
-    { "name": "GitHub Foundations", "code": "GH-900", "issuer": "GitHub", "group": "fundamentals", "issued": "2026-01", "badge": "assets/badges/gh-900.svg", "skills": [] },
-    { "name": "Microsoft 365 Fundamentals", "code": "MS-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2025-02", "badge": "assets/badges/ms-900.png", "skills": [] },
-    { "name": "Azure Fundamentals", "code": "AZ-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2024-06", "badge": "assets/badges/az-900.png", "skills": ["Microsoft Azure"] },
-    { "name": "Azure AI Fundamentals", "code": "AI-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2023-08", "badge": "assets/badges/ai-900.png", "skills": ["Microsoft Azure"] },
-    { "name": "Power Platform Fundamentals", "code": "PL-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2023-01", "badge": "assets/badges/pl-900.png", "skills": ["Microsoft Power BI"] },
-    { "name": "Azure Data Fundamentals", "code": "DP-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2022-07", "badge": "assets/badges/dp-900.png", "skills": ["Microsoft Azure", "SQL"] },
+    {
+      "name": "GitHub Foundations", "code": "GH-900", "issuer": "GitHub", "group": "fundamentals", "issued": "2026-01", "badge": "assets/badges/gh-900.svg", "skills": [],
+      "about": { "en": "Validates the fundamentals of Git and GitHub: repositories, collaboration with pull requests, project management, and security and administration.", "pt": "Valida os fundamentos de Git e GitHub: repositórios, colaboração com pull requests, gestão de projetos, segurança e administração." },
+      "validity": { "en": "2 years", "pt": "2 anos" },
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/github-foundations/",
+      "studyGuideUrl": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-900"
+    },
+    {
+      "name": "Microsoft 365 Fundamentals", "code": "MS-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2025-02", "badge": "assets/badges/ms-900.png", "skills": [],
+      "about": { "en": "Validates foundational knowledge of Microsoft 365: productivity and collaboration apps, security and compliance, and licensing and support.", "pt": "Valida o conhecimento básico do Microsoft 365: aplicativos de produtividade e colaboração, segurança e conformidade, licenciamento e suporte." },
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/microsoft-365-fundamentals/"
+    },
+    {
+      "name": "Azure Fundamentals", "code": "AZ-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2024-06", "badge": "assets/badges/az-900.png", "skills": ["Microsoft Azure"],
+      "about": { "en": "Validates foundational knowledge of cloud concepts and Azure: core architecture and services, and management and governance.", "pt": "Valida o conhecimento básico de conceitos de nuvem e do Azure: arquitetura e serviços principais, gerenciamento e governança." },
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/exams/az-900/"
+    },
+    {
+      "name": "Azure AI Fundamentals", "code": "AI-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2023-08", "badge": "assets/badges/ai-900.png", "skills": ["Microsoft Azure"],
+      "about": { "en": "Validates foundational knowledge of AI and machine learning concepts and the related Azure services, including computer vision and natural language processing.", "pt": "Valida o conhecimento básico de conceitos de IA e machine learning e dos serviços do Azure relacionados, incluindo visão computacional e processamento de linguagem natural." },
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/"
+    },
+    {
+      "name": "Power Platform Fundamentals", "code": "PL-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2023-01", "badge": "assets/badges/pl-900.png", "skills": ["Microsoft Power BI"],
+      "about": { "en": "Validates foundational knowledge of Microsoft Power Platform and its business value for building apps, automating processes and working with data.", "pt": "Valida o conhecimento básico do Microsoft Power Platform e do seu valor para criar aplicativos, automatizar processos e trabalhar com dados." },
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/exams/pl-900/"
+    },
+    {
+      "name": "Azure Data Fundamentals", "code": "DP-900", "issuer": "Microsoft", "group": "fundamentals", "issued": "2022-07", "badge": "assets/badges/dp-900.png", "skills": ["Microsoft Azure", "SQL"],
+      "about": { "en": "Validates foundational knowledge of core data concepts and data services on Azure: relational and non-relational data, and analytics workloads.", "pt": "Valida o conhecimento básico de conceitos de dados e dos serviços de dados no Azure: dados relacionais e não relacionais e cargas de trabalho de análise." },
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/exams/dp-900/"
+    },
 
     { "name": "Implement a Real-Time Intelligence solution with Microsoft Fabric", "issuer": "Microsoft", "group": "applied", "issued": "2024-10", "skills": ["Microsoft Fabric", "KQL"] },
     { "name": "Implement a data warehouse in Microsoft Fabric", "issuer": "Microsoft", "group": "applied", "issued": "2024-05", "skills": ["Microsoft Fabric", "SQL"] },

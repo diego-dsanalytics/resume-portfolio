@@ -40,10 +40,11 @@ Most requests are content changes and need no code. The README documents the sch
 - **Dates** are `"YYYY-MM"` strings. A current role has `"end": null`. Education uses plain years.
 - **Phases** (`data`, `support`, `operations`, `teaching`) each have a matching CSS color. A new phase needs a `phases` entry plus `--phase-<id>` tokens (light and both dark blocks) and `.bar--<id>` rules in `css/styles.css`, including the 680px list and the legend swatch.
 - **Certifications.** `group` must match a `certificationGroups[].id`. Don't hand-edit dates when a certification lapses: the page derives it from `expires`. Set `"retired": true` only when the issuer withdrew the exam. A badge needs an image in `assets/badges/` named after the exam code in lowercase (`dp-700.png`).
+- **Certification details** (`about`, `domains`, `validity`, `url`, `studyGuideUrl`, `credentialUrl`) feed the certification drawer. Groups with `"drawer": false` (`professional`, `training`) have no drawer, so don't add details there. Take `about` and `domains` from the official study guide (the Microsoft Learn MCP server is the quickest source), never from memory. List `domains` only for certifications the user keeps current through renewal, because a non-renewing exam's current skills may not be the ones they were tested on. `credentialUrl` is the user's own verification link: only add one they give you. The link id (`#cert-<id>`) comes from `id`, otherwise `code`, otherwise the English name, so don't change those for a certification that may have been shared.
 - **Work items** take either `date` (`"YYYY-MM"`) or a free-text `period`, and either one `url` (with an optional `linkLabel`) or a `links` list.
 - **Interface wording** lives in `ui`. A new `data-i18n` key in `index.html` or `t("key")` call in `app.js` needs an entry in `ui` with both languages. Plural entries are `[singular, plural]` arrays.
 - **Profile link icons** are limited to the keys in `ICONS` in `app.js` (`linkedin`, `github`, `microsoft`, `mail`).
-- Keep the existing formatting: 2-space indentation, one role, certification or skill per line.
+- Keep the existing formatting: 2-space indentation, one role, certification or skill per line. A certification with drawer details is expanded instead: the basic fields on its first line, then one line per detail field and one line per domain.
 
 ## Code conventions
 

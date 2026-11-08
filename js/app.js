@@ -53,6 +53,10 @@
     return value;
   }
 
+  // "Implement a lakehouse in Microsoft Fabric" -> "implement-a-lakehouse-in-microsoft-fabric"
+  const slug = text => text.normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
   const t = (key, vars = {}) => Object.entries(vars).reduce(
     (text, [k, v]) => text.replace(`{${k}}`, v), state.data.ui[key] ?? key);
 
@@ -319,12 +323,21 @@
     return cert.retired ? el("span", { class: "tag" }, t("retiredBy", { issuer: cert.issuer })) : null;
   }
 
+  // A group can turn the drawer off with "drawer": false.
+  const certGroup = cert => state.data.certificationGroups.find(g => g.id === cert.group) || {};
+  const hasDrawer = cert => certGroup(cert).drawer !== false;
+
+  // The name is the link; CSS stretches its click area over the whole card or row.
+  const certLink = cert => (hasDrawer(cert)
+    ? el("a", { class: "cert-link", href: `#cert-${cert.id}` }, cert.name)
+    : cert.name);
+
   function badgeCard(cert) {
     return el("li", { class: "badge-card", "data-skills": JSON.stringify(cert.skills) },
       cert.badge && el("img", { src: cert.badge, alt: "", width: "72", height: "72", loading: "lazy", decoding: "async" }),
       el("div", {},
         el("p", { class: "badge-card__code" }, cert.code, certStatus(cert)),
-        el("p", { class: "badge-card__name" }, cert.name),
+        el("p", { class: "badge-card__name" }, certLink(cert)),
         el("p", { class: "badge-card__date" }, certDate(cert))));
   }
 
@@ -338,7 +351,7 @@
 
   function certRow(cert) {
     return el("li", { class: "cert-row", "data-skills": JSON.stringify(cert.skills) },
-      el("span", { class: "cert-row__name" }, cert.name, certStatus(cert)),
+      el("span", { class: "cert-row__name" }, certLink(cert), certStatus(cert)),
       el("span", { class: "cert-row__meta" }, `${cert.issuer} · ${certDate(cert)}`));
   }
 
@@ -402,34 +415,97 @@
       role.summary && el("p", {}, role.summary),
       highlightList(role.highlights),
       role.skills.length ? el("h3", {}, t("skillsHeading")) : null,
-      role.skills.length ? el("div", { class: "drawer__skills" }, role.skills.map(s =>
-        el("button", {
-          type: "button", class: "skill-btn",
-          onclick: () => { setSkill(s); closeDrawer(); location.hash = "career"; }
-        }, skillLabel(s)))) : null,
+      role.skills.length ? el("div", { class: "drawer__skills" }, role.skills.map(skillButton)) : null,
       siblings.length ? el("h3", {}, t("alsoAt", { company: role.company })) : null,
       siblings.length ? el("ul", { class: "drawer__siblings" }, siblings.map(r =>
         el("li", {}, el("a", { href: `#role-${r.id}` }, r.title), ` · ${fmtRange(r)}`))) : null
     ].filter(Boolean));
 
+    showDrawer();
+  }
+
+  function showDrawer() {
     const drawer = $("#drawer");
     if (!drawer.open) drawer.showModal();
+    drawer.scrollTop = 0;
     $("#drawer-close").focus();
   }
 
   const phaseName = id => (state.data.phases.find(p => p.id === id) || { name: "" }).name;
 
+  function openCert(id) {
+    const cert = state.data.certifications.find(c => c.id === id && hasDrawer(c));
+    if (!cert) { console.warn(`[resume] No certification with details for id "${id}"`); closeDrawer(); return; }
+    const group = certGroup(cert);
+    // A renewal rule no longer applies once the certification has lapsed or been withdrawn.
+    const validity = cert.retired || isExpired(cert) ? null : cert.validity || group.validity;
+    const siblings = state.data.certifications.filter(c => c.group === cert.group && c.id !== id);
+    const links = [
+      cert.url && [t("certPage"), cert.url],
+      cert.studyGuideUrl && [t("studyGuide"), cert.studyGuideUrl],
+      cert.credentialUrl && [t("verifyCredential"), cert.credentialUrl]
+    ].filter(Boolean);
+    const fact = (label, value) => (value ? el("div", {}, el("dt", {}, label), el("dd", {}, value)) : null);
+
+    $("#drawer-body").replaceChildren(...[
+      el("div", { class: "drawer__cert-head" },
+        cert.badge && el("img", { src: cert.badge, alt: "", width: "88", height: "88", decoding: "async" }),
+        el("div", {},
+          el("p", { class: "drawer__phase" }, [group.name, cert.code].filter(Boolean).join(" · ")),
+          el("h2", { id: "drawer-title" }, cert.name),
+          certStatus(cert))),
+      el("dl", { class: "drawer__facts" },
+        fact(t("issuer"), cert.issuer),
+        fact(t("issued"), cert.issued && fmtMonth(cert.issued)),
+        fact(isExpired(cert) ? t("expiredLabel") : t("validUntilLabel"), cert.expires && fmtMonth(cert.expires)),
+        fact(t("renewal"), validity)),
+      cert.about ? el("h3", {}, t("certAbout")) : null,
+      cert.about ? el("p", {}, cert.about) : null,
+      domainList(cert.domains),
+      cert.skills.length ? el("h3", {}, t("skillsHeading")) : null,
+      cert.skills.length ? el("div", { class: "drawer__skills" }, cert.skills.map(skillButton)) : null,
+      links.length ? el("h3", {}, t("linksHeading")) : null,
+      links.length ? el("ul", { class: "drawer__links" }, links.map(([label, url]) =>
+        el("li", {}, el("a", { href: url, ...externalAttrs(url) }, label)))) : null,
+      siblings.length ? el("h3", {}, t("alsoIn", { group: group.name })) : null,
+      siblings.length ? el("ul", { class: "drawer__siblings" }, siblings.map(c =>
+        el("li", {}, el("a", { href: `#cert-${c.id}` }, c.code ? `${c.code} · ${c.name}` : c.name)))) : null
+    ].flat().filter(Boolean));
+
+    showDrawer();
+  }
+
+  // Exam domains with their official weight ranges, drawn as bars scaled to the largest.
+  function domainList(domains) {
+    if (!domains || !domains.length) return null;
+    const top = weight => Number((weight.match(/(\d+)\s*%/) || [0, 0])[1]);
+    const max = Math.max(...domains.map(d => top(d.weight))) || 1;
+    return [
+      el("h3", {}, t("skillsMeasured")),
+      el("ul", { class: "domains" }, domains.map(d => el("li", {},
+        el("span", { class: "domains__row" }, el("span", {}, d.name), el("b", {}, d.weight)),
+        el("span", { class: "domains__bar", "aria-hidden": "true" },
+          el("i", { style: `width:${(top(d.weight) / max) * 100}%` })))))
+    ];
+  }
+
+  const skillButton = s => el("button", {
+    type: "button", class: "skill-btn",
+    onclick: () => { setSkill(s); closeDrawer(); location.hash = "career"; }
+  }, skillLabel(s));
+
   // The browser queues the dialog's close event, so the hash is cleared right away as
-  // well. Otherwise selecting the same role again would not change the hash or reopen it.
-  function clearRoleHash() {
-    if (location.hash.startsWith("#role-")) {
+  // well. Otherwise selecting the same item again would not change the hash or reopen it.
+  const DETAIL_HASH = /^#(role|cert)-/;
+  function clearDetailHash() {
+    if (DETAIL_HASH.test(location.hash)) {
       history.replaceState(null, "", location.pathname + location.search);
     }
   }
 
   function closeDrawer() {
     const drawer = $("#drawer");
-    clearRoleHash();
+    clearDetailHash();
     if (drawer.open) drawer.close();
   }
 
@@ -438,16 +514,16 @@
     $("#drawer-close").addEventListener("click", closeDrawer);
     // A click on the backdrop lands on the dialog element itself.
     drawer.addEventListener("click", e => { if (e.target === drawer) closeDrawer(); });
-    drawer.addEventListener("cancel", clearRoleHash); // Esc
+    drawer.addEventListener("cancel", clearDetailHash); // Esc
     drawer.addEventListener("close", () => {
-      clearRoleHash();
+      clearDetailHash();
       const trigger = state.lastTrigger;
       if (trigger && trigger.isConnected) trigger.focus();
     });
     // The browser only restores focus to what opened the dialog, and a hash change
     // loses that, so remember the control that was used.
     document.addEventListener("click", e => {
-      const t = e.target.closest("button[data-role], a[href^='#role-']");
+      const t = e.target.closest("button[data-role], a[href^='#role-'], a[href^='#cert-']");
       if (t && !drawer.contains(t)) state.lastTrigger = t;
     });
   }
@@ -455,6 +531,7 @@
   function syncHash() {
     const hash = decodeURIComponent(location.hash.slice(1));
     if (hash.startsWith("role-")) openRole(hash.slice(5));
+    else if (hash.startsWith("cert-")) openCert(hash.slice(5));
     else closeDrawer();
   }
 
@@ -490,8 +567,10 @@
       check(c.name, c.skills);
       if (!groups.has(c.group)) console.warn(`[resume] "${c.name}" has an unknown group: "${c.group}".`);
     });
-    const ids = roles.map(r => r.id);
-    ids.filter((id, i) => ids.indexOf(id) !== i).forEach(id => console.warn(`[resume] Duplicate role id: "${id}".`));
+    const dupes = (list, kind) => list.filter((id, i) => list.indexOf(id) !== i)
+      .forEach(id => console.warn(`[resume] Duplicate ${kind} id: "${id}".`));
+    dupes(roles.map(r => r.id), "role");
+    dupes(data.certifications.map(c => c.id), "certification");
   }
 
   /* ---------- Boot ---------- */
@@ -501,6 +580,11 @@
     state.roles = state.data.experience.flatMap(c => c.roles.map(r => ({
       ...r, company: c.company, location: c.location
     })));
+    // The link id comes from the English data, so it is the same in both languages.
+    state.data.certifications.forEach((c, i) => {
+      const raw = state.raw.certifications[i];
+      c.id = raw.id || slug(raw.code || localize(raw.name, "en"));
+    });
     renderStaticText();
     renderHero();
     renderYears();

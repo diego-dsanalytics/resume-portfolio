@@ -8,7 +8,7 @@ It's a static site with no build step and no dependencies, apart from Google Fon
 
 - **Career timeline:** one row per company, newest first, and one bar per role, coloured by career phase. On a phone it becomes a list. The total years of experience above it is calculated from the dates, so it stays current on its own.
 - **Skill filter:** pick a skill from the dropdown to highlight the matching roles, work and certifications and dim the rest.
-- **Details drawer:** opens for any role, with a link you can share, such as `#role-dataside-tech-lead`.
+- **Details drawer:** opens for any role or certification (except the "Other professional certifications" and "Courses and achievements" groups), with a link you can share, such as `#role-dataside-tech-lead` or `#cert-dp-600`. A certification's drawer shows what it validates, its dates and renewal rule, the skills the exam measures with their weights, and links to the official pages.
 - **Certifications:** a certification's dates update automatically once its `expires` date has passed, showing the period it was valid with no label. Add `"retired": true` to show "Retired by Microsoft" when the issuer withdrew it.
 - **Print or save as PDF:** the printer icon gives a compact, light version without the interactive parts.
 
@@ -60,7 +60,20 @@ All content is in [`data/resume.json`](data/resume.json). You shouldn't need to 
 
 **Skills** must match a `name` in `skills` exactly, in English, in every language. A skill's optional `label` is the translated text that's displayed. If a name doesn't match, the browser console logs a warning. The dropdown sorts them alphabetically and leaves out any skill with no roles, certifications or work attached.
 
-**To add a certification badge**, put the image in [`assets/badges/`](assets/badges/) and set its `badge` path. `certificationGroups` controls the layout (`badges` or `list`), whether a group starts `collapsed`, and whether it appears in `print`.
+**To add a certification badge**, put the image in [`assets/badges/`](assets/badges/) and set its `badge` path. `certificationGroups` controls the layout (`badges` or `list`), whether a group starts `collapsed`, whether it appears in `print`, whether its certifications open a drawer (`"drawer": false` turns it off), and the default `validity` text shown in the drawer.
+
+**Certification details** are all optional, and the drawer leaves out whatever is missing:
+
+| Key | What it holds |
+| --- | --- |
+| `about` | A sentence on what the certification validates |
+| `domains` | The exam's skills measured, as `{ "name": ..., "weight": "25–30%" }`, from the official study guide |
+| `validity` | Overrides the group's `validity`, such as `"2 years"` for GitHub certifications |
+| `url`, `studyGuideUrl` | The official certification page and study guide |
+| `credentialUrl` | Your public verification link, such as a Microsoft Learn credential share link or a Credly badge |
+| `id` | The shareable link. If it's missing it comes from the `code`, or from the English name |
+
+Only list `domains` for certifications you keep current (Associate certifications renew yearly). A Fundamentals exam can change a lot after you pass it, so its current skills may not be the ones you were tested on.
 
 ## Publish on GitHub Pages
 

@@ -275,6 +275,15 @@ h1 { font-size: clamp(2.3rem, 5vw, 3.25rem); }
 .cert-row { display: flex; justify-content: space-between; gap: 20px; padding: 9px 0; border-top: 1px solid var(--border); font-size: .92rem; }
 .cert-row__meta { flex: none; font-size: .84rem; color: var(--text-muted); }
 
+/* The certification name is the link; its ::after covers the whole card or row. */
+.badge-card, .cert-row { position: relative; transition: opacity .2s, border-color .15s; }
+.cert-link { color: inherit; text-decoration: none; }
+.cert-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.cert-link:focus-visible { outline: none; }
+.cert-link:focus-visible::after { outline: 2px solid var(--accent); outline-offset: 2px; }
+.badge-card:hover { border-color: var(--accent); }
+.badge-card:hover .cert-link, .cert-row:hover .cert-link { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+
 /* ---------- Toolkit ---------- */
 .toolkit-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px 40px; }
 .toolkit__group { margin-bottom: 8px; font-size: .9rem; font-weight: 600; }
@@ -308,6 +317,19 @@ h1 { font-size: clamp(2.3rem, 5vw, 3.25rem); }
 }
 .skill-btn:hover { border-color: var(--accent); }
 .drawer__siblings { display: grid; gap: 4px; font-size: .92rem; color: var(--text-muted); }
+.drawer__cert-head { display: flex; align-items: center; gap: 16px; }
+.drawer__cert-head img { flex: none; width: 88px; height: 88px; }
+.drawer__cert-head > div { display: grid; gap: 4px; justify-items: start; }
+.drawer__cert-head .tag { margin-left: 0; }
+.drawer__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 20px; margin-top: 6px; padding: 14px 0; border-block: 1px solid var(--border); }
+.drawer__facts dt { font-size: .78rem; color: var(--text-muted); }
+.drawer__facts dd { font-size: .92rem; font-weight: 500; line-height: 1.4; }
+.domains { display: grid; gap: 10px; }
+.domains__row { display: flex; justify-content: space-between; gap: 16px; font-size: .9rem; line-height: 1.4; }
+.domains__row b { flex: none; font-weight: 600; color: var(--text-muted); }
+.domains__bar { display: block; height: 6px; margin-top: 4px; background: var(--bg-alt); border-radius: 3px; overflow: hidden; }
+.domains__bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.drawer__links { display: grid; gap: 4px; font-size: .92rem; font-weight: 500; }
 
 /* ---------- Reveal on scroll (classes are only added when motion is allowed) ---------- */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s cubic-bezier(.2, .7, .2, 1); }
