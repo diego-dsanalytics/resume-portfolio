@@ -45,10 +45,18 @@
     "studyGuide": { "en": "Study guide", "pt": "Guia de estudo" },
     "verifyCredential": { "en": "Verify the credential", "pt": "Verificar a credencial" },
     "alsoIn": { "en": "Also in {group}", "pt": "Também em {group}" },
+    "placesTitle": { "en": "Around the world", "pt": "Pelo mundo" },
+    "placesHelp": { "en": "Drag the globe, or pick a continent, country or state to see the roles and events there.", "pt": "Arraste o globo ou escolha um continente, país ou estado para ver os cargos e eventos de lá." },
+    "allPlaces": { "en": "All places", "pt": "Todos os lugares" },
+    "showOnGlobe": { "en": "Show on globe", "pt": "Ver no globo" },
+    "globeLabel": { "en": "Globe showing the countries where I have worked and attended events", "pt": "Globo com os países onde trabalhei e participei de eventos" },
+    "placeWork": { "en": "Work", "pt": "Trabalho" },
+    "placeEvents": { "en": "Events", "pt": "Eventos" },
     "and": { "en": "and", "pt": "e" },
     "months": { "en": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "pt": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"] },
     "role": { "en": ["role", "roles"], "pt": ["cargo", "cargos"] },
     "certification": { "en": ["certification", "certifications"], "pt": ["certificação", "certificações"] },
+    "event": { "en": ["event", "events"], "pt": ["evento", "eventos"] },
     "workItem": { "en": ["work item", "work items"], "pt": ["trabalho", "trabalhos"] },
     "year": { "en": ["yr", "yrs"], "pt": ["ano", "anos"] },
     "month": { "en": ["mo", "mos"], "pt": ["mês", "meses"] }
@@ -75,6 +83,25 @@
     { "id": "teaching", "name": { "en": "Teaching", "pt": "Ensino" } }
   ],
 
+  "continents": [
+    { "id": "europe", "name": { "en": "Europe", "pt": "Europa" }, "countries": ["AT", "ES", "PT", "SE"] },
+    { "id": "north-america", "name": { "en": "North America", "pt": "América do Norte" }, "countries": ["US"] },
+    { "id": "south-america", "name": { "en": "South America", "pt": "América do Sul" }, "countries": ["BR"] }
+  ],
+
+  "places": [
+    { "id": "lisbon", "name": { "en": "Lisbon", "pt": "Lisboa" }, "country": "PT", "lat": 38.72, "lon": -9.14 },
+    { "id": "porto", "name": "Porto", "country": "PT", "lat": 41.15, "lon": -8.61 },
+    { "id": "new-york", "name": { "en": "New York", "pt": "Nova York" }, "country": "US", "region": { "code": "US-NY", "name": { "en": "New York", "pt": "Nova York" } }, "lat": 40.71, "lon": -74.01 },
+    { "id": "sao-jose-dos-campos", "name": "São José dos Campos", "country": "BR", "region": { "code": "BR-SP", "name": "São Paulo" }, "lat": -23.18, "lon": -45.89 },
+    { "id": "belo-horizonte", "name": "Belo Horizonte", "country": "BR", "region": { "code": "BR-MG", "name": "Minas Gerais" }, "lat": -19.92, "lon": -43.94 },
+    { "id": "tres-pontas", "name": "Três Pontas", "country": "BR", "region": { "code": "BR-MG", "name": "Minas Gerais" }, "lat": -21.37, "lon": -45.51 },
+    { "id": "ouro-preto", "name": "Ouro Preto", "country": "BR", "region": { "code": "BR-MG", "name": "Minas Gerais" }, "lat": -20.39, "lon": -43.50 },
+    { "id": "barcelona", "name": "Barcelona", "country": "ES", "lat": 41.39, "lon": 2.17 },
+    { "id": "vienna", "name": { "en": "Vienna", "pt": "Viena" }, "country": "AT", "lat": 48.21, "lon": 16.37 },
+    { "id": "stockholm", "name": { "en": "Stockholm", "pt": "Estocolmo" }, "country": "SE", "lat": 59.33, "lon": 18.07 }
+  ],
+
   "skills": [
     { "name": "Microsoft Power BI", "group": { "en": "Core", "pt": "Principais" } },
     { "name": "Microsoft Fabric", "group": { "en": "Core", "pt": "Principais" } },
@@ -99,6 +126,7 @@
     {
       "company": "BI4ALL",
       "location": { "en": "Lisbon, Portugal", "pt": "Lisboa, Portugal" },
+      "place": "lisbon",
       "roles": [
         { "id": "bi4all-senior-consultant", "title": "Senior Analytics Consultant", "start": "2026-04", "end": null, "phase": "data", "mode": "", "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] },
         { "id": "bi4all-consultant", "title": "Analytics Consultant", "start": "2025-10", "end": "2026-03", "phase": "data", "mode": { "en": "Hybrid", "pt": "Híbrido" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] }
@@ -107,6 +135,7 @@
     {
       "company": "Capgemini Engineering",
       "location": "Porto, Portugal",
+      "place": "porto",
       "roles": [
         { "id": "capgemini-consultant-engineer", "title": "Consultant Engineer", "start": "2025-04", "end": "2025-09", "phase": "data", "mode": { "en": "Hybrid", "pt": "Híbrido" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
@@ -114,6 +143,7 @@
     {
       "company": "Quartile",
       "location": { "en": "New York, United States", "pt": "Nova York, Estados Unidos" },
+      "place": "new-york",
       "roles": [
         { "id": "quartile-analytics-engineer", "title": "Analytics Engineer", "start": "2024-09", "end": "2025-03", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
       ]
@@ -121,6 +151,7 @@
     {
       "company": "Dataside",
       "location": { "en": "São José dos Campos, Brazil", "pt": "São José dos Campos, Brasil" },
+      "place": "sao-jose-dos-campos",
       "roles": [
         { "id": "dataside-tech-lead", "title": "Tech Lead DataViz", "start": "2023-03", "end": "2024-08", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "Microsoft Fabric", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards", "Mentoring"] },
         { "id": "dataside-senior-analyst", "title": "Senior Power BI Analyst", "start": "2022-12", "end": "2023-02", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "PySpark", "Excel", "Python", "Databricks", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] }
@@ -129,6 +160,7 @@
     {
       "company": "eNotas",
       "location": { "en": "Belo Horizonte, Brazil", "pt": "Belo Horizonte, Brasil" },
+      "place": "belo-horizonte",
       "roles": [
         { "id": "enotas-tech-lead", "title": "Tech Lead Data Analysis", "start": "2021-10", "end": "2022-11", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Microsoft Azure", "Figma", "Data Modeling", "ETL", "Dashboards"] },
         { "id": "enotas-analyst", "title": { "en": "Data Analyst", "pt": "Analista de Dados Pleno" }, "start": "2021-07", "end": "2021-09", "phase": "data", "mode": { "en": "Remote", "pt": "Remoto" }, "summary": "", "highlights": [], "skills": ["Microsoft Power BI", "DAX", "Power Query", "SQL", "Excel", "Python", "Figma", "Data Modeling", "ETL", "Dashboards"] },
@@ -138,6 +170,7 @@
     {
       "company": "Sum Software",
       "location": { "en": "Três Pontas, Brazil", "pt": "Três Pontas, Brasil" },
+      "place": "tres-pontas",
       "roles": [
         { "id": "sum-customer-support", "title": { "en": "Customer Support", "pt": "Suporte ao Cliente" }, "start": "2020-12", "end": "2021-02", "phase": "support", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": "", "highlights": [], "skills": ["SQL"] }
       ]
@@ -145,6 +178,7 @@
     {
       "company": { "en": "Tecnotextil Group", "pt": "Grupo Tecnotextil" },
       "location": { "en": "Três Pontas, Brazil", "pt": "Três Pontas, Brasil" },
+      "place": "tres-pontas",
       "roles": [
         { "id": "tecnotextil-quality-analyst", "title": { "en": "Quality Analyst", "pt": "Analista de Qualidade" }, "start": "2020-05", "end": "2020-11", "phase": "operations", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": "", "highlights": [], "skills": ["Excel"] },
         { "id": "tecnotextil-procedures-assistant", "title": { "en": "Procedures Assistant", "pt": "Assistente de Procedimentos" }, "start": "2020-01", "end": "2020-04", "phase": "operations", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": "", "highlights": [], "skills": ["Excel"] },
@@ -154,6 +188,7 @@
     {
       "company": "Fundação Gorceix",
       "location": { "en": "Ouro Preto, Brazil", "pt": "Ouro Preto, Brasil" },
+      "place": "ouro-preto",
       "roles": [
         { "id": "gorceix-instructor", "title": { "en": "Course Instructor", "pt": "Instrutor de Cursos" }, "start": "2017-10", "end": "2018-12", "phase": "teaching", "mode": { "en": "On-site", "pt": "Presencial" }, "summary": { "en": "Taught the Minitab courses offered through the foundation's academic and professional training department.", "pt": "Professor dos cursos de Minitab oferecidos pela Fundação Gorceix, por meio do Departamento de Treinamento Acadêmico e Profissional (DETAP)." }, "highlights": [], "skills": ["Minitab", "Mentoring"] }
       ]
@@ -167,6 +202,7 @@
       "period": "2024 – 2026",
       "summary": { "en": "I've been part of every edition so far: Stockholm (2024), Vienna (2025) and Barcelona (2026). For me it's the yearly chance to meet the people behind the Fabric community, learn from them and share what I bring back.", "pt": "Participei de todas as edições até agora: Estocolmo (2024), Viena (2025) e Barcelona (2026). Para mim, é a chance anual de encontrar quem faz a comunidade de Fabric, aprender com essas pessoas e compartilhar o que trago de volta." },
       "skills": ["Microsoft Fabric"],
+      "places": ["barcelona", "vienna", "stockholm"],
       "links": [
         { "label": "Barcelona 2026", "url": "https://www.linkedin.com/posts/diego-scalioni_microsoftfabric-fabcon-barcelona-activity-7507881479021035521-dThN" },
         { "label": { "en": "Vienna 2025", "pt": "Viena 2025" }, "url": "https://www.linkedin.com/posts/diego-scalioni_microsoft-fabric-msfabric-activity-7373451274614198273-CGAM" },

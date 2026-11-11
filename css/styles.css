@@ -15,6 +15,13 @@
   --phase-support: #2f8580;
   --phase-operations: #7c8598;
   --phase-teaching: #b4782c;
+  --globe-sea: #e3e9f8;
+  --globe-land: #fbfaf7;
+  --globe-line: #b4bdd6;
+  --globe-visited: #a9b9f0;
+  --globe-active: #2447d6;
+  --globe-marker: #141a2b;
+  --globe-halo: #ffffff;
   --shadow-lg: 0 16px 48px rgba(20, 26, 43, .2);
   --radius: 10px;
   --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -38,6 +45,13 @@
     --phase-support: #5cc0b9;
     --phase-operations: #8b94a9;
     --phase-teaching: #dba65f;
+    --globe-sea: #121a30;
+    --globe-land: #2a3249;
+    --globe-line: #46516f;
+    --globe-visited: #47599c;
+    --globe-active: #8aa4ff;
+    --globe-marker: #f2f4fb;
+    --globe-halo: #0e1220;
     --shadow-lg: 0 16px 48px rgba(0, 0, 0, .55);
     color-scheme: dark;
   }
@@ -59,6 +73,13 @@
   --phase-support: #5cc0b9;
   --phase-operations: #8b94a9;
   --phase-teaching: #dba65f;
+  --globe-sea: #121a30;
+  --globe-land: #2a3249;
+  --globe-line: #46516f;
+  --globe-visited: #47599c;
+  --globe-active: #8aa4ff;
+  --globe-marker: #f2f4fb;
+  --globe-halo: #0e1220;
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, .55);
   color-scheme: dark;
 }
@@ -230,6 +251,39 @@ h1 { font-size: clamp(2.3rem, 5vw, 3.25rem); }
 .swatch.bar--operations { background: var(--phase-operations); }
 .swatch.bar--teaching { background: var(--phase-teaching); }
 
+/* ---------- Places and globe ---------- */
+.places {
+  display: grid; grid-template-columns: minmax(0, 1fr) 280px; align-items: center; gap: 24px 48px;
+  margin-top: 40px; padding-top: 36px; border-top: 1px solid var(--border);
+}
+.places__head { grid-column: 1 / -1; }
+.places__globe { width: min(520px, 100%); margin-inline: auto; aspect-ratio: 1; }
+/* pan-y keeps a vertical swipe scrolling the page; a sideways drag turns the globe. */
+#globe { display: block; width: 100%; height: 100%; border-radius: 50%; cursor: grab; touch-action: pan-y; }
+#globe.is-dragging { cursor: grabbing; }
+.places__head h3 { font-size: 1.1rem; }
+.places__head .muted { margin-top: 4px; font-size: .92rem; }
+.place-list { display: grid; gap: 10px; justify-items: start; }
+.place-tree { display: grid; gap: 2px; width: 100%; }
+.place-tree--continent { gap: 10px; }
+.place-tree--country, .place-tree--region { margin: 2px 0 0 10px; padding-left: 4px; border-left: 1px solid var(--border); }
+.place-btn {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  width: 100%; padding: 4px 10px;
+  background: none; border: 1px solid transparent; border-radius: 6px; cursor: pointer;
+  font-size: .9rem; line-height: 1.5; text-align: left;
+}
+.place-btn:hover { border-color: var(--accent); }
+.place-btn[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.place-btn--all { width: auto; border-color: var(--border-strong); }
+.place-btn--continent { font-weight: 600; }
+.place-btn--country { font-weight: 500; }
+.place-btn__count { flex: none; font-size: .8rem; font-weight: 400; color: var(--text-muted); }
+.place-btn[aria-pressed="true"] .place-btn__count { color: inherit; }
+.places .legend { margin-top: 16px; }
+.place-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--globe-marker); }
+.place-dot--event { background: var(--globe-halo); border: 2px solid var(--globe-marker); }
+
 /* ---------- Experience ---------- */
 .company { display: grid; grid-template-columns: 240px 1fr; gap: 8px 32px; padding-block: 22px; border-top: 1px solid var(--border-strong); }
 .company:last-child { border-bottom: 1px solid var(--border-strong); }
@@ -308,6 +362,10 @@ h1 { font-size: clamp(2.3rem, 5vw, 3.25rem); }
 .drawer__body h2 { font-size: 1.6rem; }
 .drawer__company { color: var(--text-muted); }
 .drawer__dates { font-size: .88rem; color: var(--text-muted); }
+.drawer__where { display: flex; align-items: center; gap: 16px; }
+.drawer__where > div { display: grid; gap: 4px; justify-items: start; }
+.drawer__where .skill-btn { margin-top: 4px; }
+.drawer__globe { flex: none; width: 96px; height: 96px; border-radius: 50%; }
 .drawer__body h3 { margin-top: 14px; font-size: .9rem; }
 .drawer__skills { display: flex; flex-wrap: wrap; gap: 8px; }
 .skill-btn {
@@ -338,6 +396,9 @@ h1 { font-size: clamp(2.3rem, 5vw, 3.25rem); }
 /* ---------- Responsive ---------- */
 @media (max-width: 880px) {
   .company { grid-template-columns: 1fr; }
+  .places { grid-template-columns: 1fr; }
+  .places__globe { width: min(420px, 100%); }
+  .places__panel { width: min(420px, 100%); margin-inline: auto; }
 }
 
 /* On a phone the chart would be unreadable, so it becomes a vertical list of roles. */

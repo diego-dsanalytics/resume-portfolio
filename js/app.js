@@ -36,6 +36,8 @@
     lang: "en",
     roles: [],            // flat list; each role also carries its company
     skill: "",            // active skill filter; empty shows everything
+    place: "",            // active place filter: a country code, a place id or empty
+    geo: null,            // map outlines from world.json, loaded when the globe is needed
     now: new Date()
   };
 
@@ -120,6 +122,7 @@
       const next = current === "dark" ? "light" : "dark";
       document.documentElement.dataset.theme = next;
       store.set("resume-theme", next);
+      redrawGlobes();
     });
     $("#print-btn").addEventListener("click", () => window.print());
     $$("[data-lang]").forEach(b => b.addEventListener("click", () => setLanguage(b.dataset.lang)));
@@ -204,25 +207,412 @@
   }
 
   function applyFilter() {
-    const skill = state.skill;
+    const { skill, place } = state;
     const matches = skills => !skill || skills.includes(skill);
+    const here = places => !place || places.some(id => inPlace(id, place));
 
     let matchedRoles = 0;
     for (const role of state.roles) {
-      const hit = matches(role.skills);
+      const hit = matches(role.skills) && here([role.place]);
       if (hit) matchedRoles++;
       $$(`[data-role="${role.id}"]`).forEach(n => n.classList.toggle("is-dim", !hit));
     }
-    $$("[data-skills]").forEach(n => n.classList.toggle("is-dim", !matches(JSON.parse(n.dataset.skills))));
+    // Only items that carry places (featured work) react to the place filter.
+    $$("[data-skills]").forEach(n => {
+      const placed = !n.dataset.places || here(JSON.parse(n.dataset.places));
+      n.classList.toggle("is-dim", !(matches(JSON.parse(n.dataset.skills)) && placed));
+    });
 
     // A match hidden inside the collapsed list should not stay out of sight.
     const collapsed = $("#cert-list details");
     if (collapsed && skill && $$("[data-skills]:not(.is-dim)", collapsed).length) collapsed.open = true;
 
     const matchedCerts = state.data.certifications.filter(c => matches(c.skills)).length;
-    $("#filter-status").textContent = skill
-      ? `${plural(matchedRoles, "role")} ${t("and")} ${plural(matchedCerts, "certification")}`
+    const events = place ? placeCounts(place).events : 0;
+    // An event-only place says "1 event", not "0 roles and 1 event".
+    const counts = matchedRoles || skill || !events ? [plural(matchedRoles, "role")] : [];
+    if (skill) counts.push(plural(matchedCerts, "certification"));
+    else if (events) counts.push(plural(events, "event"));
+    $("#filter-status").textContent = skill || place
+      ? `${place ? `${placeLabel(place)}: ` : ""}${counts.join(` ${t("and")} `)}`
       : "";
+  }
+
+  /* ---------- Places ---------- */
+  // The place filter holds a continent id ("europe"), a country code ("BR") or a region
+  // code ("BR-MG"). The globe also previews single places by their id ("tres-pontas").
+  const placeById = id => state.data.places.find(p => p.id === id);
+  const continentById = id => state.data.continents.find(c => c.id === id);
+  const continentOf = code => state.data.continents.find(c => c.countries.includes(code)) || {};
+  const regionCode = place => (place.region ? place.region.code : "");
+  const placeLevel = selection => (continentById(selection) ? "continent"
+    : placeById(selection) ? "place"
+    : state.data.places.some(p => p.country === selection) ? "country" : "region");
+  const placesIn = selection => state.data.places.filter(p => p.id === selection || p.country === selection
+    || regionCode(p) === selection || continentOf(p.country).id === selection);
+  const inPlace = (id, selection) => placesIn(selection).some(p => p.id === id);
+  const countryName = code => {
+    try { return new Intl.DisplayNames([LOCALES[state.lang]], { type: "region" }).of(code); } catch { return code; }
+  };
+  const placeLabel = selection => {
+    const region = state.data.places.map(p => p.region).find(r => r && r.code === selection);
+    return (continentById(selection) || region || { name: countryName(selection) }).name;
+  };
+  const placeCounts = selection => ({
+    roles: state.roles.filter(r => inPlace(r.place, selection)).length,
+    events: state.data.work.reduce((n, w) => n + (w.places || []).filter(id => inPlace(id, selection)).length, 0)
+  });
+  // A place is an event place when no role happened there.
+  const isWorkPlace = id => state.roles.some(r => r.place === id);
+
+  function renderPlaces() {
+    const { places } = state.data;
+    const button = (id, label, cls = "") => {
+      const { roles, events } = id ? placeCounts(id) : {};
+      const counts = [roles && plural(roles, "role"), events && plural(events, "event")].filter(Boolean).join(" · ");
+      return el("button", {
+        type: "button", class: `place-btn ${cls}`.trim(), "data-place": id,
+        "aria-pressed": String(state.place === id),
+        onclick: () => setPlace(state.place === id ? "" : id)
+      }, el("span", {}, label), counts && el("span", { class: "place-btn__count" }, counts));
+    };
+    // Continent, then country, then state: each level in alphabetical order.
+    const sorted = nodes => nodes.sort((a, b) => a.label.localeCompare(b.label, LOCALES[state.lang]));
+    const regions = code => [...new Map(places.filter(p => p.country === code && p.region)
+      .map(p => [p.region.code, { id: p.region.code, label: p.region.name }])).values()];
+    const tree = sorted(state.data.continents.map(c => ({
+      id: c.id, label: c.name,
+      children: sorted(c.countries.filter(code => places.some(p => p.country === code))
+        .map(code => ({ id: code, label: countryName(code), children: sorted(regions(code)) })))
+    })));
+    const levels = ["continent", "country", "region"];
+    const branch = (nodes, depth) => (nodes && nodes.length
+      ? el("ul", { class: `place-tree place-tree--${levels[depth]}` }, nodes.map(n =>
+        el("li", {}, button(n.id, n.label, `place-btn--${levels[depth]}`), branch(n.children, depth + 1))))
+      : null);
+    $("#place-list").replaceChildren(button("", t("allPlaces"), "place-btn--all"), branch(tree, 0));
+    $("#place-legend").replaceChildren(
+      el("li", {}, el("span", { class: "place-dot" }), t("placeWork")),
+      el("li", {}, el("span", { class: "place-dot place-dot--event" }), t("placeEvents")));
+    redrawGlobes();
+  }
+
+  function setPlace(selection) {
+    state.place = selection;
+    $$("#place-list [data-place]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.place === selection)));
+    if (mainGlobe) mainGlobe.select(selection);
+    applyFilter();
+  }
+
+  /* ---------- Globe ---------- */
+  const RAD = Math.PI / 180;
+  const HOME = { lon: -32, lat: 24, k: 1 };   // the Atlantic: every place is in view
+  const globes = new Set();
+  let mainGlobe = null;
+  let geoRequest = null;
+
+  const unit = (lon, lat) => {
+    const c = Math.cos(lat * RAD);
+    return [c * Math.cos(lon * RAD), c * Math.sin(lon * RAD), Math.sin(lat * RAD)];
+  };
+  // A ring is a flat [lon, lat, lon, lat, ...] list. On the sphere it becomes [x, y, z, ...].
+  const toVectors = ring => {
+    const out = new Float32Array((ring.length / 2) * 3);
+    for (let i = 0, j = 0; i < ring.length; i += 2, j += 3) out.set(unit(ring[i], ring[i + 1]), j);
+    return out;
+  };
+  const line = (from, to, step, point) => {
+    const ring = [];
+    for (let v = from; v <= to; v += step) ring.push(...point(v));
+    return toVectors(ring);
+  };
+  const GRATICULE = [
+    ...[-150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 150, 180].map(lon => line(-80, 80, 5, lat => [lon, lat])),
+    ...[-60, -30, 0, 30, 60].map(lat => line(-180, 180, 5, lon => [lon, lat]))
+  ];
+
+  function pointInRings(lon, lat, rings) {
+    let inside = false;
+    for (const r of rings) {
+      for (let i = 0, j = r.length - 2; i < r.length; j = i, i += 2) {
+        if ((r[i + 1] > lat) !== (r[j + 1] > lat)
+          && lon < ((r[j] - r[i]) * (lat - r[i + 1])) / (r[j + 1] - r[i + 1]) + r[i]) inside = !inside;
+      }
+    }
+    return inside;
+  }
+
+  // The outlines are only fetched when a globe is about to be seen.
+  function loadGeo() {
+    geoRequest ??= fetch("data/world.json")
+      .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
+      .then(raw => {
+        const shapes = group => Object.fromEntries(Object.entries(group || {}).map(
+          ([id, rings]) => [id, { rings, vectors: rings.map(toVectors) }]));
+        state.geo = { countries: shapes(raw.countries), regions: shapes(raw.regions) };
+        for (const p of state.data.places) {
+          if (!state.geo.countries[p.country]) console.warn(`[resume] Place "${p.id}" has a country with no outline: "${p.country}".`);
+          if (p.region && !state.geo.regions[p.region.code]) console.warn(`[resume] Place "${p.id}" has a region with no outline: "${p.region.code}".`);
+        }
+        redrawGlobes();
+      })
+      .catch(err => console.warn("[resume] Could not load data/world.json, so the globe has no map.", err));
+    return geoRequest;
+  }
+
+  function redrawGlobes() {
+    for (const globe of globes) {
+      if (globe.canvas.isConnected) globe.draw();
+      else globes.delete(globe);
+    }
+  }
+
+  // An orthographic globe on a canvas. The page has one that can be dragged and clicked,
+  // and the drawer gets a small fixed one for each role.
+  function createGlobe(canvas, { interactive = false, onPick } = {}) {
+    const ctx = canvas.getContext("2d");
+    const view = { ...HOME };
+    let selection = "";   // what the place filter holds
+    let focus = "";       // a place being previewed, which wins over the selection
+    let size = 0;         // canvas width in CSS pixels
+    let frame = 0;
+    let onScreen = !interactive;
+    let scratch = new Float32Array(1024);
+
+    const ZOOM = { continent: 1.4, country: 1.6, region: 3.5, place: 4 };
+    const target = (id, zoom) => {
+      const inside = id ? placesIn(id) : [];
+      if (!inside.length) return { ...HOME };
+      const mean = key => inside.reduce((sum, p) => sum + p[key], 0) / inside.length;
+      return { lon: mean("lon"), lat: mean("lat"), k: zoom || ZOOM[placeLevel(id)] };
+    };
+
+    // Screen axes for the current view: east, north and toward the viewer.
+    function camera() {
+      const lo = view.lon * RAD, la = view.lat * RAD;
+      return {
+        c: size / 2, s: (size / 2 - 1) * view.k,
+        e: [-Math.sin(lo), Math.cos(lo), 0],
+        n: [-Math.sin(la) * Math.cos(lo), -Math.sin(la) * Math.sin(lo), Math.cos(la)],
+        f: [Math.cos(la) * Math.cos(lo), Math.cos(la) * Math.sin(lo), Math.sin(la)]
+      };
+    }
+    const dot = (a, v, i) => a[0] * v[i] + a[1] * v[i + 1] + a[2] * v[i + 2];
+
+    // Adds one outline to the current path. Points on the far side are moved to the edge
+    // of the disc for a closed shape, and break the line for an open one.
+    function trace(cam, vectors, closed) {
+      const count = vectors.length / 3;
+      if (scratch.length < count * 2) scratch = new Float32Array(count * 2);
+      let visible = false;
+      for (let i = 0; i < count; i++) {
+        let x = dot(cam.e, vectors, i * 3), y = dot(cam.n, vectors, i * 3);
+        if (dot(cam.f, vectors, i * 3) < 0) {
+          if (closed) { const d = Math.hypot(x, y) || 1; x /= d; y /= d; } else x = NaN;
+        } else visible = true;
+        scratch[i * 2] = cam.c + cam.s * x;
+        scratch[i * 2 + 1] = cam.c - cam.s * y;
+      }
+      if (!visible) return;
+      let pen = false;
+      for (let i = 0; i < count; i++) {
+        const x = scratch[i * 2], y = scratch[i * 2 + 1];
+        if (Number.isNaN(x)) { pen = false; continue; }
+        if (pen) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+        pen = true;
+      }
+      if (closed) ctx.closePath();
+    }
+
+    function markers(cam) {
+      return state.data.places.map(place => {
+        const v = unit(place.lon, place.lat);
+        return dot(cam.f, v, 0) > 0.05
+          ? { place, x: cam.c + cam.s * dot(cam.e, v, 0), y: cam.c - cam.s * dot(cam.n, v, 0) }
+          : null;
+      }).filter(Boolean);
+    }
+
+    function draw() {
+      if (!size || !state.data) return;
+      const css = getComputedStyle(canvas);
+      const color = name => css.getPropertyValue(name).trim();
+      const dpr = window.devicePixelRatio || 1;
+      const cam = camera();
+      const radius = size / 2 - 1;
+      const hot = focus || selection;
+      const hotPlace = placeById(hot);
+      const hotCountries = new Set((hot ? placesIn(hot) : []).map(p => p.country));
+      const hotRegion = hotPlace ? regionCode(hotPlace) : hot;
+      const visited = new Set(state.data.places.map(p => p.country));
+      const { geo } = state;
+
+      const paint = (shapes, fill, alpha = 1) => {
+        ctx.beginPath();
+        for (const shape of shapes) for (const vectors of shape.vectors) trace(cam, vectors, true);
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = fill;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.stroke();
+      };
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, size, size);
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cam.c, cam.c, radius, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.fillStyle = color("--globe-sea");
+      ctx.fillRect(0, 0, size, size);
+
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = color("--globe-line");
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      for (const vectors of GRATICULE) trace(cam, vectors, false);
+      ctx.stroke();
+
+      if (geo) {
+        const ids = Object.keys(geo.countries);
+        ctx.lineWidth = 0.6;
+        paint(ids.filter(id => !visited.has(id)).map(id => geo.countries[id]), color("--globe-land"));
+        paint(ids.filter(id => visited.has(id)).map(id => geo.countries[id]), color("--globe-visited"));
+        // With a region to show, the country around it is only tinted.
+        const region = hotRegion && geo.regions[hotRegion];
+        paint(ids.filter(id => hotCountries.has(id)).map(id => geo.countries[id]), color("--globe-active"), region ? 0.35 : 1);
+        if (region) paint([region], color("--globe-active"));
+      }
+
+      for (const { place, x, y } of markers(cam)) {
+        const work = isWorkPlace(place.id);
+        ctx.beginPath();
+        ctx.arc(x, y, place.id === hot ? 5.5 : 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = color(work ? "--globe-marker" : "--globe-halo");
+        ctx.strokeStyle = color(work ? "--globe-halo" : "--globe-marker");
+        ctx.lineWidth = work ? 1.5 : 2;
+        ctx.fill();
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      ctx.beginPath();
+      ctx.arc(cam.c, cam.c, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = color("--globe-line");
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    function fly(to, ms = 900) {
+      cancelAnimationFrame(frame);
+      const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (still || !onScreen || !size) { Object.assign(view, to); draw(); return; }
+      const from = { ...view };
+      const turn = ((to.lon - from.lon + 540) % 360) - 180;   // the short way around
+      let start = 0;
+      const step = now => {
+        start ||= now;
+        const p = Math.min(1, (now - start) / ms);
+        const q = p < 0.5 ? 2 * p * p : 1 - ((-2 * p + 2) ** 2) / 2;
+        view.lon = from.lon + turn * q;
+        view.lat = from.lat + (to.lat - from.lat) * q;
+        view.k = from.k + (to.k - from.k) * q;
+        draw();
+        if (p < 1) frame = requestAnimationFrame(step);
+      };
+      frame = requestAnimationFrame(step);
+    }
+
+    new ResizeObserver(() => {
+      const next = Math.round(canvas.clientWidth);
+      if (!next || next === size) return;
+      size = next;
+      canvas.width = canvas.height = Math.round(size * (window.devicePixelRatio || 1));
+      draw();
+    }).observe(canvas);
+
+    if (interactive) {
+      let drag = null;
+      const pick = e => {
+        const box = canvas.getBoundingClientRect();
+        const x = e.clientX - box.left, y = e.clientY - box.top;
+        const cam = camera();
+        const near = markers(cam)
+          .map(m => ({ id: regionCode(m.place) || m.place.country, d: Math.hypot(m.x - x, m.y - y) }))
+          .filter(m => m.d < 14).sort((a, b) => a.d - b.d)[0];
+        if (near) { onPick(near.id); return; }
+        // Back from the screen to a longitude and latitude, then to the country under it.
+        const px = (x - cam.c) / cam.s, py = (cam.c - y) / cam.s;
+        const pz = Math.sqrt(1 - px * px - py * py);
+        if (Number.isNaN(pz) || !state.geo) return;
+        const v = [0, 1, 2].map(i => px * cam.e[i] + py * cam.n[i] + pz * cam.f[i]);
+        const lon = Math.atan2(v[1], v[0]) / RAD, lat = Math.asin(v[2]) / RAD;
+        const code = [...new Set(state.data.places.map(p => p.country))].find(id =>
+          state.geo.countries[id] && pointInRings(lon, lat, state.geo.countries[id].rings));
+        if (code) onPick(code);
+      };
+      canvas.addEventListener("pointerdown", e => {
+        cancelAnimationFrame(frame);
+        drag = { x: e.clientX, y: e.clientY, lon: view.lon, lat: view.lat, moved: false };
+        canvas.setPointerCapture(e.pointerId);
+      });
+      canvas.addEventListener("pointermove", e => {
+        if (!drag) return;
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!drag.moved && Math.hypot(dx, dy) < 4) return;
+        drag.moved = true;
+        canvas.classList.add("is-dragging");
+        const s = (size / 2 - 1) * view.k * RAD;
+        view.lon = ((drag.lon - dx / s + 540) % 360) - 180;
+        view.lat = Math.max(-85, Math.min(85, drag.lat + dy / s));
+        draw();
+      });
+      const release = e => {
+        if (drag && !drag.moved && e.type === "pointerup") pick(e);
+        drag = null;
+        canvas.classList.remove("is-dragging");
+      };
+      canvas.addEventListener("pointerup", release);
+      canvas.addEventListener("pointercancel", release);
+
+      // The first time it scrolls into view, the globe turns into place.
+      let arrived = false;
+      new IntersectionObserver(entries => {
+        onScreen = entries[0].isIntersecting;
+        if (!onScreen || arrived) return;
+        arrived = true;
+        if (!selection && !focus) { view.lon = HOME.lon + 70; fly(HOME, 1400); }
+      }, { threshold: 0.35 }).observe(canvas);
+    }
+
+    const globe = {
+      canvas, draw,
+      select(id) { selection = id; focus = ""; fly(target(id)); },
+      peek(id) { if (placeById(id)) { focus = id; fly(target(id, 2)); } },
+      show(id, zoom) { selection = id; Object.assign(view, target(id, zoom)); draw(); }
+    };
+    globes.add(globe);
+    return globe;
+  }
+
+  function initGlobe() {
+    const canvas = $("#globe");
+    mainGlobe = createGlobe(canvas, {
+      interactive: true,
+      onPick: id => setPlace(state.place === id ? "" : id)
+    });
+    // Leaving a previewed role returns the globe to the selected place.
+    const settle = () => mainGlobe.select(state.place);
+    $("#timeline").addEventListener("mouseleave", settle);
+    $("#drawer").addEventListener("close", settle);
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redrawGlobes);
+    if (!("IntersectionObserver" in window)) { loadGeo(); return; }
+    const io = new IntersectionObserver(entries => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      io.disconnect();
+      loadGeo();
+    }, { rootMargin: "400px" });
+    io.observe(canvas);
   }
 
   /* ---------- Timeline ---------- */
@@ -254,8 +644,8 @@
               style: `--left:${pct(monthIndex(role.start))};--width:${(roleMonths(flat) / span) * 100}%`,
               "aria-label": t("barLabel", { title: role.title, company: company.company, dates: fmtRange(role) }),
               onclick: () => { location.hash = `role-${role.id}`; },
-              onmouseenter: () => showReadout(flat),
-              onfocus: () => showReadout(flat)
+              onmouseenter: () => previewRole(flat),
+              onfocus: () => previewRole(flat)
             },
               el("span", { class: "bar__title" }, role.title),
               el("span", { class: "bar__dates" }, fmtRange(role)));
@@ -267,6 +657,11 @@
     const used = new Set(roles.map(r => r.phase));
     $("#legend").replaceChildren(...data.phases.filter(p => used.has(p.id)).map(p =>
       el("li", {}, el("span", { class: `swatch bar--${p.id}` }), p.name)));
+  }
+
+  function previewRole(role) {
+    showReadout(role);
+    if (mainGlobe) mainGlobe.peek(role.place);
   }
 
   function showReadout(role) {
@@ -303,7 +698,7 @@
     $("#work-list").replaceChildren(...items.map(w => {
       // One "url", or a "links" list when an item has several.
       const links = w.links || (w.url ? [{ url: w.url, label: w.linkLabel || t("readMore") }] : []);
-      return el("article", { class: "work__item", "data-skills": JSON.stringify(w.skills) },
+      return el("article", { class: "work__item", "data-skills": JSON.stringify(w.skills), "data-places": JSON.stringify(w.places || []) },
         el("p", { class: "work__meta" }, `${w.kind} · ${w.period || fmtMonth(w.date)}`),
         el("h3", {}, w.title),
         el("p", {}, w.summary),
@@ -406,12 +801,18 @@
     if (!role) { console.warn(`[resume] No role with id "${id}"`); return; }
     const siblings = state.roles.filter(r => r.company === role.company && r.id !== id);
     const companyLine = [role.company, role.location, role.mode].filter(Boolean).join(" · ");
+    const place = placeById(role.place);
+    const locator = place && el("canvas", { class: "drawer__globe", "aria-hidden": "true" });
 
     $("#drawer-body").replaceChildren(...[
       el("p", { class: `drawer__phase phase--${role.phase}` }, phaseName(role.phase)),
       el("h2", { id: "drawer-title" }, role.title),
-      el("p", { class: "drawer__company" }, companyLine),
-      el("p", { class: "drawer__dates" }, `${fmtRange(role)} · ${fmtDuration(roleMonths(role))}`),
+      el("div", { class: "drawer__where" },
+        locator,
+        el("div", {},
+          el("p", { class: "drawer__company" }, companyLine),
+          el("p", { class: "drawer__dates" }, `${fmtRange(role)} · ${fmtDuration(roleMonths(role))}`),
+          place && el("button", { type: "button", class: "skill-btn", onclick: () => showOnGlobe(place.id) }, t("showOnGlobe")))),
       role.summary && el("p", {}, role.summary),
       highlightList(role.highlights),
       role.skills.length ? el("h3", {}, t("skillsHeading")) : null,
@@ -421,7 +822,24 @@
         el("li", {}, el("a", { href: `#role-${r.id}` }, r.title), ` · ${fmtRange(r)}`))) : null
     ].filter(Boolean));
 
+    if (locator) {
+      createGlobe(locator).show(place.id, 3);
+      loadGeo();
+      if (mainGlobe) mainGlobe.peek(place.id);
+    }
     showDrawer();
+  }
+
+  // Like a skill button: leave the drawer and go to the globe with the place selected.
+  function showOnGlobe(placeId) {
+    const place = placeById(placeId);
+    const id = regionCode(place) || place.country;
+    state.lastTrigger = null;   // focus goes to the place button, not back to the role
+    setPlace(id);
+    closeDrawer();
+    location.hash = "places";
+    const button = $(`#place-list [data-place="${id}"]`);
+    if (button) button.focus({ preventScroll: true });
   }
 
   function showDrawer() {
@@ -538,7 +956,7 @@
   /* ---------- Reveal on scroll ---------- */
   function initReveal() {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
-    const targets = $$(".section__head, .timeline, .company, .work__item, .cert-group, .toolkit");
+    const targets = $$(".section__head, .timeline, .places, .company, .work__item, .cert-group, .toolkit");
     const io = new IntersectionObserver(entries => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
@@ -558,11 +976,16 @@
     const check = (owner, skills) => skills.forEach(s => {
       if (!known.has(s)) console.warn(`[resume] "${owner}" names an unknown skill: "${s}". Add it to "skills".`);
     });
+    const places = new Set(data.places.map(p => p.id));
+    const located = (owner, ids) => ids.forEach(id => {
+      if (!places.has(id)) console.warn(`[resume] "${owner}" names an unknown place: "${id}". Add it to "places".`);
+    });
     roles.forEach(r => {
       check(r.id, r.skills);
       if (!phases.has(r.phase)) console.warn(`[resume] "${r.id}" has an unknown phase: "${r.phase}".`);
     });
-    data.work.forEach(w => check(w.title, w.skills));
+    data.experience.forEach(c => located(c.company, c.place ? [c.place] : []));
+    data.work.forEach(w => { check(w.title, w.skills); located(w.title, w.places || []); });
     data.certifications.forEach(c => {
       check(c.name, c.skills);
       if (!groups.has(c.group)) console.warn(`[resume] "${c.name}" has an unknown group: "${c.group}".`);
@@ -571,6 +994,10 @@
       .forEach(id => console.warn(`[resume] Duplicate ${kind} id: "${id}".`));
     dupes(roles.map(r => r.id), "role");
     dupes(data.certifications.map(c => c.id), "certification");
+    dupes(data.places.map(p => p.id), "place");
+    data.places.forEach(p => {
+      if (!continentOf(p.country).id) console.warn(`[resume] Place "${p.id}" has a country in no continent: "${p.country}". Add it to "continents".`);
+    });
   }
 
   /* ---------- Boot ---------- */
@@ -578,7 +1005,7 @@
   function render() {
     state.data = localize(state.raw, state.lang);
     state.roles = state.data.experience.flatMap(c => c.roles.map(r => ({
-      ...r, company: c.company, location: c.location
+      ...r, company: c.company, location: c.location, place: c.place
     })));
     // The link id comes from the English data, so it is the same in both languages.
     state.data.certifications.forEach((c, i) => {
@@ -590,6 +1017,7 @@
     renderYears();
     renderSkillFilter();
     renderTimeline();
+    renderPlaces();
     renderExperience();
     renderWork();
     renderCertifications();
@@ -600,6 +1028,7 @@
   async function init() {
     initControls();
     initDrawer();
+    initGlobe();
     try {
       const res = await fetch("data/resume.json", { cache: "no-cache" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);

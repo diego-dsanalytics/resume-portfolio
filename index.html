@@ -87,6 +87,20 @@
         <div class="timeline" id="timeline"></div>
         <p class="readout" id="readout" aria-hidden="true"></p>
         <ul class="legend" id="legend" aria-label="Career phases"></ul>
+
+        <div class="places no-print" id="places">
+          <div class="places__head">
+            <h3 data-i18n="placesTitle">Around the world</h3>
+            <p class="muted" data-i18n="placesHelp">Drag the globe, or pick a continent, country or state to see the roles and events there.</p>
+          </div>
+          <div class="places__globe">
+            <canvas id="globe" role="img" data-i18n-label="globeLabel" aria-label="Globe showing the countries where I have worked and attended events"></canvas>
+          </div>
+          <div class="places__panel">
+            <div class="place-list" id="place-list"></div>
+            <ul class="legend" id="place-legend"></ul>
+          </div>
+        </div>
       </div>
     </section>
 
